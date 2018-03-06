@@ -32,7 +32,8 @@ class _SpaceTrack():
     def __init__(self, username: str, password: str, fmt: str=None):
         """ Initializes the API.
         
-        This API class can be used to build and submit requests to space-track.org.
+        This API class can be used to build and submit requests to
+        space-track.org.
         
         Args:
             username: your space-track.org username.
@@ -40,8 +41,8 @@ class _SpaceTrack():
         
         Kwargs:
             fmt: string specifying format for returned message. Can be one of
-            'xml', 'json', 'html', 'csv', 'tle', '3le', 'kvn', or None. None
-            is the same as 'json'. Default is None.
+                'xml', 'json', 'html', 'csv', 'tle', '3le', 'kvn', or None.
+                None is the same as 'json'. Default is None.
         
         Raises:
             ValueError: if provided fmt is not one of the specified options.
@@ -93,18 +94,18 @@ class _SpaceTrack():
                            equal: bool=False) -> str:
         """ Generates a string based on input range and mode.
         
-        If `equal` is True, returns `start` or `end` (if `start` is None).
-        If `equal` is False, retruns `'>[start]'` if only `start` is given,
-        returns `'<[end]'` if only `end` is given, and returns `'start--end'`
-        if both are given. Note that no range checking is performed on the
-        input strings to ensure the result is a valid range.
+        If `equal` is True, returns `start` or `end` (if `start` is None). If
+        `equal` is False, retruns `'>[start]'` if only `start` is given,
+        returns `'<[end]'` if only `end` is given, and returns
+        `'[start]--[end]'` if both are given. Note that no range checking is
+        performed on the input strings to ensure the result is a valid range.
         
         Kwargs:
             start: the starting (lowest) value of the string. Default is None.
             end: the end (highest) value of the string. Default is None.
-            equal: if True, returns `start` if defined, otherwise `end`.
-                If False, returns a range based on values of `start` and
-                `end`. Default is False.
+            equal: if True, returns `start` if defined, otherwise `end`.  If
+                False, returns a range based on values of `start` and `end`.
+                Default is False.
         
         Returns:
             Resulting range string.
@@ -112,8 +113,8 @@ class _SpaceTrack():
         Raises:
             ValueError: if neither `start` nor `end` is specified and `equal`
                 is `True`.
-            ValueError: if neither `start` nor `end` (or both) is specified
-                and `equal` is `False`.
+            ValueError: if neither `start` nor `end` (or both) is specified and
+                `equal` is `False`.
         """
         result = None
         if equal:
@@ -139,14 +140,14 @@ class _SpaceTrack():
     def print_query(self):
         """ Prints the query to the screen.
         
-        Note that at this stage the format string has not been applied to
-        the query. This string gets applied at the very end prior to
-        submitting the POST request.
+        Note that at this stage the format string has not been applied to the
+        query. This string gets applied at the very end prior to submitting the
+        POST request.
         """
         print('/'.join(self._query))
 
     def submit(self) -> requests.models.Response:
-        """ Submits the generated query to space-track.org and returns the response.
+        """ Submits the generated query to space-track.org.
         
         Returns:
             Response from space-track.org
@@ -156,7 +157,8 @@ class _SpaceTrack():
                    'query': self._compile_query()}
         self.result = requests.post(self.login_url, data=payload)
         if not self.result.ok:
-            print('Error posting request! Status code {}'.format(self.result.status_code))
+            print('Error posting request! Status code {}'.format(
+                        self.result.status_code))
         self._logout()
         return self.result
 
@@ -172,8 +174,8 @@ class TleQuery(_SpaceTrack):
         
         Kwargs:
             fmt: string specifying format for returned message. Can be one of
-            'xml', 'json', 'html', 'csv', 'tle', '3le', 'kvn', or None. None
-            is the same as 'json'. Default is None.
+                'xml', 'json', 'html', 'csv', 'tle', '3le', 'kvn', or None. None
+                is the same as 'json'. Default is None.
         """
         self._start_query()
         self._query.extend('class', 'tle')
@@ -192,16 +194,15 @@ class TleQuery(_SpaceTrack):
     def epoch(self, start: str=None, end: str=None, equal: bool=False):
         """ Specifies a date range for the EPOCH field in the query.
         
-        If only a start date is specified and 'equal' is set to 'False',
-        the query will look for epochs on or after the start date. If
-        both a start and end date are specified, the query will look
-        for the range between those dates. If only an end date is
-        specified and 'equal' is set to 'False', the query will look for
-        epochs on or before the end date.
+        If only a start date is specified and 'equal' is set to 'False', the
+        query will look for epochs on or after the start date. If both a start
+        and end date are specified, the query will look for the range between
+        those dates. If only an end date is specified and 'equal' is set to
+        'False', the query will look for epochs on or before the end date.
         
-        'equal' can be set to 'True', in which case it will look for
-        epochs exactly on the start date (if specified) or end date
-        if no start date is specified.
+        'equal' can be set to 'True', in which case it will look for epochs
+        exactly on the start date (if specified) or end date if no start date
+        is specified.
         
         All dates are datetime-formatted strings of the form:
         
@@ -214,18 +215,86 @@ class TleQuery(_SpaceTrack):
         Kwargs:
             start: start date as a datetime-formatted string.
             end: end date as a datetime-formatted string.
-            equal: if False, looks for dates greater than the start date
-                if only a start date is specified, less than the end date
-                if only an end date is specified, and between the start
-                and end dates if both are specified.
+            equal: if False, looks for dates greater than the start date if
+                only a start date is specified, less than the end date if only
+                an end date is specified, and between the start and end dates
+                if both are specified.
         
         Raises:
             ValueError: if neither `start` nor `end` is specified and `equal`
                 is `True`.
-            ValueError: if neither `start` nor `end` (or both) is specified
-                and `equal` is `False`.
+            ValueError: if neither `start` nor `end` (or both) is specified and
+                `equal` is `False`.
         """
         self._query.extend('EPOCH', self._make_range_string(start, end, equal))
+
+    def mean_motion(self, low: float=None, high: float=None, equal: bool=False):
+        self._query.extend('MEAN_MOTION',
+                           self._make_range_string(str(low), str(high), equal))
+
+    def eccentricity(self, low: float=None, high: float=None,
+                     equal: bool=False):
+        self._query.extend('ECCENTRICITY',
+                           self._make_range_string(str(low), str(high), equal))
+
+    def inclination(self, low: float=None, high: float=None,
+                    equal: bool=False):
+        self._query.extend('INCLINATION',
+                           self._make_range_string(str(low), str(high), equal))
+
+    def ra_of_asc_node(self, low: float=None, high: float=None,
+                       equal: bool=False):
+        self._query.extend('RA_OF_ASC_NODE',
+                           self._make_range_string(str(low), str(high), equal))
+
+    def arg_of_pericenter(self, low: float=None, high: float=None,
+                          equal: bool=False):
+        self._query.extend('ARG_OF_PERICENTER',
+                           self._make_range_string(str(low), str(high), equal))
+
+    def mean_anomaly(self, low: float=None, high: float=None,
+                     equal: bool=False):
+        self._query.extend('MEAN_ANOMALY',
+                           self._make_range_string(str(low), str(high), equal))
+
+    def element_set_no(self, number: int):
+        self._query.extend('ELEMENT_SET_NO', str(number))
+
+    def rev_at_epoch(self, low: float=None, high: float=None,
+                     equal: bool=False):
+        self._query.extend('MEAN_ANOMALY',
+                           self._make_range_string(str(low), str(high), equal))
+
+    def bstar(self, low: float=None, high: float=None, equal: bool=False):
+        self._query.extend('BSTAR',
+                           self._make_range_string(str(low), str(high), equal))
+
+    def mean_motion_dot(self, low: float=None, high: float=None, equal:
+                        bool=False):
+        self._query.extend('MEAN_MOTION_DOT',
+                           self._make_range_string(str(low), str(high), equal))
+
+    def mean_motion_ddot(self, low: float=None, high: float=None,
+                         equal: bool=False):
+        self._query.extend('MEAN_MOTION_DDOT',
+                           self._make_range_string(str(low), str(high), equal))
+
+    def semimajor_axis(self, low: float=None, high: float=None,
+                       equal: bool=False):
+        self._query.extend('SEMIMAJOR_AXIS',
+                           self._make_range_string(str(low), str(high), equal))
+
+    def period(self, low: float=None, high: float=None, equal: bool=False):
+        self._query.extend('PERIOD',
+                           self._make_range_string(str(low), str(high), equal))
+
+    def apogee(self, low: float=None, high: float=None, equal: bool=False):
+        self._query.extend('APOGEE',
+                           self._make_range_string(str(low), str(high), equal))
+
+    def perigee(self, low: float=None, high: float=None, equal: bool=False):
+        self._query.extend('PERIGEE',
+                           self._make_range_string(str(low), str(high), equal))
 
 
 class TleLatestQuery(_SpaceTrack):
