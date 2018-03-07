@@ -1,6 +1,6 @@
 import requests
 
-class _SpaceTrack():
+class _SpaceTrackBase():
     """ Provides an API for making POST requests to space-track.org
     
     Properties:
@@ -163,24 +163,12 @@ class _SpaceTrack():
         return self.result
 
 
-class TleQuery(_SpaceTrack):
-    """ TLE request from space-track.org. """
-    def __init__(self, *args, **kwargs):
-        """ Initiates a TLE request.
-        
-        Args:
-            username: your space-track.org username.
-            password: the associated password.
-        
-        Kwargs:
-            fmt: string specifying format for returned message. Can be one of
-                'xml', 'json', 'html', 'csv', 'tle', '3le', 'kvn', or None. None
-                is the same as 'json'. Default is None.
-        """
-        self._start_query()
-        self._query.extend('class', 'tle')
-        super().__init__(*args, **kwargs)
+class _SatelliteIdMixin():
+    """ Mixin class for specifying methods associate with satellite IDs.
 
+    This class has the methods used for querying according to NORAD catalog ID,
+    satellite name, etc.
+    """
     def norad_cat_id(self, id_number: int):
         """ Specifies the NORAD_CAT_ID field in the query.
         
@@ -191,6 +179,45 @@ class TleQuery(_SpaceTrack):
         """
         self._query.extend('NORAD_CAT_ID', str(id_number))
 
+    def object_name(self, obj_name: str):
+        self._query.extend('OBJECT_NAME', str(obj_name))
+
+    def object_type(self, obj_type: str):
+        self._query.extend('OBJECT_TYPE', str(obj_type))
+
+    def object_id(self, obj_id: str):
+        self._query.extend('OBJECT_ID', str(obj_id))
+
+    def object_number(self, obj_num: int):
+        self._query.extend('OBJECT_ID', str(obj_num))
+
+
+class _OrbitMixin():
+    """ Specifies most common methods for querying orbit information. """
+    def period(self, low: float=None, high: float=None, equal: bool=False):
+        self._query.extend('PERIOD',
+                           self._make_range_string(str(low), str(high), equal))
+
+    def apogee(self, low: float=None, high: float=None, equal: bool=False):
+        self._query.extend('APOGEE',
+                           self._make_range_string(str(low), str(high), equal))
+
+    def perigee(self, low: float=None, high: float=None, equal: bool=False):
+        self._query.extend('PERIGEE',
+                           self._make_range_string(str(low), str(high), equal))
+
+    def inclination(self, low: float=None, high: float=None,
+                    equal: bool=False):
+        self._query.extend('INCLINATION',
+                           self._make_range_string(str(low), str(high), equal))
+
+
+class _ElsetMixin(_OrbitMixin):
+    """ Specifies methods used for ELSET-related queries.
+
+    Specifies those methods related to the element sets, e.g. the inclination,
+    right-ascension, mean motion, etc.
+    """
     def epoch(self, start: str=None, end: str=None, equal: bool=False):
         """ Specifies a date range for the EPOCH field in the query.
         
@@ -228,6 +255,10 @@ class TleQuery(_SpaceTrack):
         """
         self._query.extend('EPOCH', self._make_range_string(start, end, equal))
 
+    def epoch_us(self, low: int=None, high: int=None, equal: bool=False):
+        self._query.extend('EPOCH_MICROSECONDS',
+                           self._make_range_string(low, high, equal))
+
     def mean_motion(self, low: float=None, high: float=None, equal: bool=False):
         self._query.extend('MEAN_MOTION',
                            self._make_range_string(str(low), str(high), equal))
@@ -235,11 +266,6 @@ class TleQuery(_SpaceTrack):
     def eccentricity(self, low: float=None, high: float=None,
                      equal: bool=False):
         self._query.extend('ECCENTRICITY',
-                           self._make_range_string(str(low), str(high), equal))
-
-    def inclination(self, low: float=None, high: float=None,
-                    equal: bool=False):
-        self._query.extend('INCLINATION',
                            self._make_range_string(str(low), str(high), equal))
 
     def ra_of_asc_node(self, low: float=None, high: float=None,
@@ -284,40 +310,38 @@ class TleQuery(_SpaceTrack):
         self._query.extend('SEMIMAJOR_AXIS',
                            self._make_range_string(str(low), str(high), equal))
 
-    def period(self, low: float=None, high: float=None, equal: bool=False):
-        self._query.extend('PERIOD',
-                           self._make_range_string(str(low), str(high), equal))
 
-    def apogee(self, low: float=None, high: float=None, equal: bool=False):
-        self._query.extend('APOGEE',
-                           self._make_range_string(str(low), str(high), equal))
+class TleQuery(_SpaceTrackBase, _SatelliteIdMixin, _ElsetMixin):
+    """ TLE request from space-track.org. """
+    def __init__(self, *args, **kwargs):
+        """ Initiates a TLE request.
+        
+        Args:
+            username: your space-track.org username.
+            password: the associated password.
+        
+        Kwargs:
+            fmt: string specifying format for returned message. Can be one of
+                'xml', 'json', 'html', 'csv', 'tle', '3le', 'kvn', or None. None
+                is the same as 'json'. Default is None.
+        """
+        self._start_query()
+        self._query.extend('class', 'tle')
+        super().__init__(*args, **kwargs)
 
-    def perigee(self, low: float=None, high: float=None, equal: bool=False):
-        self._query.extend('PERIGEE',
-                           self._make_range_string(str(low), str(high), equal))
 
 
-class TleLatestQuery(_SpaceTrack):
+
+class TleLatestQuery(_SpaceTrackBase, _ElsetMixin):
     """ TLE Latest request from space-track.org. """
     def __init__(self, *args, **kwargs):
         """ Initiates a tle_latest request. """
-        raise NotImplementedError('This class is under construction.') 
         self._start_query()
         self._query.extend('class', 'tle_latest')
         super().__init__(*args, **kwargs)
 
 
-class TlePublishQuery(_SpaceTrack):
-    """ TLE Publish request from space-track.org. """
-    def __init__(self, *args, **kwargs):
-        """ Initiates a tle_publish request. """
-        raise NotImplementedError('This class is under construction.') 
-        self._start_query()
-        self._query.extend('class', 'tle_publish')
-        super().__init__(*args, **kwargs)
-
-
-class BoxScoreQuery(_SpaceTrack):
+class BoxScoreQuery(_SpaceTrackBase):
     def __init__(self, *args, **kwargs):
         """ Initiates a boxscore request. """
         raise NotImplementedError('This class is under construction.') 
@@ -326,16 +350,26 @@ class BoxScoreQuery(_SpaceTrack):
         super().__init__(*args, **kwargs)
 
 
-class SatCatQuery(_SpaceTrack):
+class SatCatQuery(_SpaceTrackBase, _OrbitMixin):
     def __init__(self, *args, **kwargs):
         """ Initiates a satcat request. """
-        raise NotImplementedError('This class is under construction.') 
         self._start_query()
         self._query.extend('class', 'satcat')
         super().__init__(*args, **kwargs)
 
+    def country(self, country: str):
+        self._query.extend('COUNTRY', country)
 
-class LaunchSiteQuery(_SpaceTrack):
+    def launch(self, low: str=None, high: str=None, equal: bool=False):
+        """ Sets the launch date range for the search. """
+        self._query.extend('LAUNCH',
+                           self._make_range_string(str(low), str(high), equal))
+
+    def site(self, site: str):
+        self._query.extend('SITE', site)
+
+
+class LaunchSiteQuery(_SpaceTrackBase):
     def __init__(self, *args, **kwargs):
         """ Initiates a launch_site request. """
         raise NotImplementedError('This class is under construction.') 
@@ -344,7 +378,7 @@ class LaunchSiteQuery(_SpaceTrack):
         super().__init__(*args, **kwargs)
 
 
-class SatCatChangeQuery(_SpaceTrack):
+class SatCatChangeQuery(_SpaceTrackBase):
     def __init__(self, *args, **kwargs):
         """ Initiates a satcat_change request. """
         raise NotImplementedError('This class is under construction.') 
@@ -353,7 +387,7 @@ class SatCatChangeQuery(_SpaceTrack):
         super().__init__(*args, **kwargs)
 
 
-class SatCatDebutQuery(_SpaceTrack):
+class SatCatDebutQuery(_SpaceTrackBase):
     def __init__(self, *args, **kwargs):
         """ Initiates a satcat_debut request. """
         raise NotImplementedError('This class is under construction.') 
@@ -362,7 +396,7 @@ class SatCatDebutQuery(_SpaceTrack):
         super().__init__(*args, **kwargs)
 
 
-class DecayQuery(_SpaceTrack):
+class DecayQuery(_SpaceTrackBase):
     def __init__(self, *args, **kwargs):
         """ Initiates a decay request. """
         raise NotImplementedError('This class is under construction.') 
@@ -371,7 +405,7 @@ class DecayQuery(_SpaceTrack):
         super().__init__(*args, **kwargs)
 
 
-class AnnouncementQuery(_SpaceTrack):
+class AnnouncementQuery(_SpaceTrackBase):
     def __init__(self, *args, **kwargs):
         """ Initiates a announcement request. """
         raise NotImplementedError('This class is under construction.') 
@@ -380,7 +414,7 @@ class AnnouncementQuery(_SpaceTrack):
         super().__init__(*args, **kwargs)
 
 
-class CdmQuery(_SpaceTrack):
+class CdmQuery(_SpaceTrackBase):
     def __init__(self, *args, **kwargs):
         """ Initiates a cdm request. """
         raise NotImplementedError('This class is under construction.') 
@@ -389,7 +423,7 @@ class CdmQuery(_SpaceTrack):
         super().__init__(*args, **kwargs)
 
 
-class OrganizationQuery(_SpaceTrack):
+class OrganizationQuery(_SpaceTrackBase):
     def __init__(self, *args, **kwargs):
         """ Initiates a organization request. """
         raise NotImplementedError('This class is under construction.') 
