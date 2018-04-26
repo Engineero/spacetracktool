@@ -13,22 +13,6 @@ class _SpaceTrackBase():
     _logout_url = 'https://www.space-track.org/ajaxauth/logout'
     _null = 'null-val'  # string used by space-track for null values
 
-    @property
-    def base(self):
-        return type(self)._base
-
-    @property
-    def login_url(self):
-        return type(self)._login_url
-
-    @property
-    def logout_url(self):
-        return type(self)._logout_url
-
-    @property
-    def null(self):
-        return type(self)._null
-
     def __init__(self, username: str, password: str, fmt: str=None):
         """ Initializes the API.
         
@@ -161,6 +145,23 @@ class _SpaceTrackBase():
                         self.result.status_code))
         self._logout()
         return self.result
+
+    @property
+    def base(self):
+        return type(self)._base
+
+    @property
+    def login_url(self):
+        return type(self)._login_url
+
+    @property
+    def logout_url(self):
+        return type(self)._logout_url
+
+    @property
+    def null(self):
+        return type(self)._null
+
 
 
 class _SatelliteIdMixin():
