@@ -1,14 +1,14 @@
 SpaceTrack
 ==========
 
+.. highlight:: python
+
 A Python API for making queries to space-track.org_. To install::
 
     pip install spacetrack
 
 To use, first get a username and password for space-track.org_, then create a
 query of the desired class. For example, to create a TLE query::
-
-.. highlight:: python
 
     import spacetrack as st
     tle_query = st.TleQuery(username, password)
