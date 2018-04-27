@@ -1,0 +1,33 @@
+CHANGES
+=======
+
+0.1.0a0
+-------
+
+* Updated docs to new name
+* Renamed files to match new repo name
+* Updated URL to reflect new repo name
+* Added [build\_sphinx] options to setup.cfg
+* Update setup.cfg
+* Update setup.cfg
+* Update setup.cfg
+* Update setup.py
+* Maybe fixed syntax highlighting
+* Added syntax highlighting to README
+* Updated readme file, minor refactoring in spacetrack.py
+* Added requests to requirements.txt
+* Removed Jupyter notebook used for early testing
+* Create setup.cfg
+* Create setup.py
+* Create requirements.txt
+* Moved source files to spacetrack folder, renamed package to 'spacetrack' from 'space\_track', added autodocs from Sphinx
+* More boilerplate, started to implement things as mixin classes
+* Added boilerplate for a lot of LTE query types
+* Started adding some tests
+* Moved workspace over to the Python script. Keeping the notebook around for prototyping for now
+* Create \_\_init\_\_.py
+* Create LICENSE
+* Started filling out classes for each query type
+* Added starters for each of the different query classes exposed by the API
+* Staring to sketch out the class in a notebook
+* Initial commit
