@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from setuptools import setup
 
-setup(pbr=True)
+setup(setup_requires=['pbr'], pbr=True)
