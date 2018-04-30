@@ -10,7 +10,7 @@ command).
 
 
 import requests
-import .operations as ops
+from . import operations as ops
 
 
 class SpaceTrackClient():
@@ -42,7 +42,7 @@ class SpaceTrackClient():
         >> new_result = client.submit()
 
     """
-    _base = 'https://space-track.org/'  # base URL for requests
+    _base = 'https://space-track.org'  # base URL for requests
     _login_url = 'https://www.space-track.org/ajaxauth/login'  # login URL
     _logout_url = 'https://www.space-track.org/ajaxauth/logout'
     _null = 'null-val'  # string used by space-track for null values
@@ -80,12 +80,11 @@ class SpaceTrackClient():
 
     def _basic(self):
         """ Adds 'basicspacedata' to the query. """
-        self._query.append('basicspacedata')
+        self._query = [self._base, 'basicspacedata']
 
     def _start_query(self):
         """ Builds the start of a query. """
-        self._query = []  # start from scratch
-        self._basic()
+        self._basic()  # restarts the query string
         self._query.append('query')
 
     def _compile_query(self) -> str:
@@ -105,7 +104,9 @@ class SpaceTrackClient():
         query. This string gets applied at the very end prior to submitting the
         POST request.
         """
+        query_string = '/'.join(self._query)
         print('/'.join(self._query))
+        return query_string
 
     def submit(self) -> requests.models.Response:
         """ Submits the generated query to space-track.org.
@@ -142,14 +143,14 @@ class SpaceTrackClient():
                 print(e)
                 raise ValueError('key argument must be a string or',
                                  'coercable to string!')
-        if not isinstance(value: str):
+        if not isinstance(value, str):
             try:
                 value = str(value)
             except Exception as e:
                 print(e)
                 raise ValueError('value argument must be a string or',
                                  'coercable to string!')
-        self._query.extend(key, id_number)
+        self._query.extend([key, value])
 
     def tle_query(self, **kwargs):
         """ Initiates a TLE query request.
@@ -265,7 +266,7 @@ class SpaceTrackClient():
                     'mean_motion_dot', 'mean_motion_ddot', 'semimajor_axis',
                     'period', 'apogee', 'perigee']
         self._start_query()
-        self._query.extend('class', 'tle')
+        self._query.extend(['class', 'tle'])
         for key in key_list:
             if key in kwargs.keys():
                 self._value_query(key.upper(), kwargs.pop(key))
@@ -276,7 +277,7 @@ class SpaceTrackClient():
         raise NotImplementedError('This method is under construction.',
                                   "If you'd like to help, please submit a pull request!") 
         self._start_query()
-        self._query.extend('class', 'tle_latest')
+        self._query.extend(['class', 'tle_latest'])
         return self.submit()
 
     def box_score_query(self):
@@ -284,13 +285,13 @@ class SpaceTrackClient():
         raise NotImplementedError('This method is under construction.',
                                   "If you'd like to help, please submit a pull request!") 
         self._start_query()
-        self._query.extend('class', 'boxscore')
+        self._query.extend(['class', 'boxscore'])
         return self.submit()
 
     def satcat_query(self):
         """ Initiates a satcat query request. """
         self._start_query()
-        self._query.extend('class', 'satcat')
+        self._query.extend(['class', 'satcat'])
         return self.submit()
 
     def launch_site_query(self):
@@ -298,7 +299,7 @@ class SpaceTrackClient():
         raise NotImplementedError('This method is under construction.',
                                   "If you'd like to help, please submit a pull request!") 
         self._start_query()
-        self._query.extend('class', 'launch_site')
+        self._query.extend(['class', 'launch_site'])
         return self.submit()
 
     def satcat_change_query(self):
@@ -306,7 +307,7 @@ class SpaceTrackClient():
         raise NotImplementedError('This method is under construction.',
                                   "If you'd like to help, please submit a pull request!") 
         self._start_query()
-        self._query.extend('class', 'satcat_change')
+        self._query.extend(['class', 'satcat_change'])
         return self.submit()
 
     def satcat_debut_query(self):
@@ -314,7 +315,7 @@ class SpaceTrackClient():
         raise NotImplementedError('This method is under construction.',
                                   "If you'd like to help, please submit a pull request!")
         self._start_query()
-        self._query.extend('class', 'satcat_debut')
+        self._query.extend(['class', 'satcat_debut'])
         return self.submit()
 
     def decay_query(self):
@@ -322,7 +323,7 @@ class SpaceTrackClient():
         raise NotImplementedError('This method is under construction.',
                                   "If you'd like to help, please submit a pull request!")
         self._start_query()
-        self._query.extend('class', 'decay')
+        self._query.extend(['class', 'decay'])
         return self.submit()
 
     def announcement_query(self):
@@ -330,7 +331,7 @@ class SpaceTrackClient():
         raise NotImplementedError('This method is under construction.',
                                   "If you'd like to help, please submit a pull request!")
         self._start_query()
-        self._query.extend('class', 'announcement')
+        self._query.extend(['class', 'announcement'])
         return self.submit()
 
     def cdm_query(self):
@@ -338,7 +339,7 @@ class SpaceTrackClient():
         raise NotImplementedError('This method is under construction.',
                                   "If you'd like to help, please submit a pull request!")
         self._start_query()
-        self._query.extend('class', 'cdm')
+        self._query.extend(['class', 'cdm'])
         return self.submit()
 
     def organization_query(self):
@@ -346,7 +347,7 @@ class SpaceTrackClient():
         raise NotImplementedError('This method is under construction.',
                                   "If you'd like to help, please submit a pull request!")
         self._start_query()
-        self._query.extend('class', 'organization')
+        self._query.extend(['class', 'organization'])
         return self.submit()
 
     @property
