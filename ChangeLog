@@ -1,6 +1,19 @@
 CHANGES
 =======
 
+0.1.0b0
+-------
+
+* Updated authors and changelog via setup.py
+* Updated README and setup.cfg
+* Fixed a bug in operations, updated doc strings in spacetracktool
+* Refactored from classes per query type to a single client with different query methods. Moved common operations to a separate module
+
+0.1.0a1
+-------
+
+* Committing AUTHORS and ChangeLog
+
 0.1.0a0
 -------
 
