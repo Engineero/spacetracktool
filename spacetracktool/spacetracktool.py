@@ -1,6 +1,17 @@
-import requests
+""" Defines the space-track.org query client.
 
+Queries to space-track.org are made by first creating a client instance, and
+then calling the appropriate method for your desired query type. Multiple
+queries may be created with the same client, but each new query type overwrites
+the previous query (cannot run multiple concurrent queries with a singel submit
+command).
+
+"""
+
+
+import requests
 import .operations as ops
+
 
 class SpaceTrackClient():
     """ Provides an API for making POST requests to space-track.org
@@ -15,7 +26,20 @@ class SpaceTrackClient():
             None is the same as 'json'. Default is None.
 
     Properties:
-        result: the result string returned from space-track.org
+        result: the result string returned from space-track.org by the last-run
+            submit command.
+
+    Examples::
+    
+        >> import spacetracktool as st
+        >> import spacetracktool.operations as ops
+        >> client = SpaceTrackClient(username, password)
+        >> client.tle_query(norad_cat_id=12345)
+        >> result = client.submit()
+    
+        >> date_range = ops.make_range_string('2018-01-01', '2018-01-31')
+        >> client.tle_query(epoch=date_range)  # throws out previous query!
+        >> new_result = client.submit()
 
     """
     _base = 'https://space-track.org/'  # base URL for requests

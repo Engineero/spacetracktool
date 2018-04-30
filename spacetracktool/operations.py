@@ -1,8 +1,7 @@
 """ Operations for use with the SpaceTrackClient.
 """
 
-def make_range_string(self, start: str=None, end: str=None,
-                      equal: bool=False) -> str:
+def make_range_string(start: str=None, end: str=None, equal: bool=False) -> str:
         """ Generates a string based on input range and mode.
         
         If `equal` is True, returns `start` or `end` (if `start` is None). If
@@ -12,8 +11,10 @@ def make_range_string(self, start: str=None, end: str=None,
         performed on the input strings to ensure the result is a valid range.
         
         Kwargs:
-            start: the starting (lowest) value of the string. Default is None.
-            end: the end (highest) value of the string. Default is None.
+            start: str or value coercable to str.
+                The starting (lowest) value of the string. Default is None.
+            end: str or value coercable to str.
+                The end (highest) value of the string. Default is None.
             equal: if True, returns `start` if defined, otherwise `end`.  If
                 False, returns a range based on values of `start` and `end`.
                 Default is False.
@@ -26,8 +27,23 @@ def make_range_string(self, start: str=None, end: str=None,
                 is `True`.
             ValueError: if neither `start` nor `end` (or both) is specified and
                 `equal` is `False`.
+            ValueError: if start or end cannot be coerced to string.
 
         """
+        if not isinstance(start, str):
+            try:
+                start = str(start)
+            except Exception as e:
+                print(e)
+                raise ValueError('start must be a string or coercable to',
+                                 'string!')
+        if not isinstance(end, str):
+            try:
+                end = str(end)
+            except Exception as e:
+                print(e)
+                raise ValueError('end must be a string or coercable to',
+                                 'string!')
         result = None
         if equal:
             if start is not None:
