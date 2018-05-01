@@ -28,7 +28,7 @@ PROJECT_URLS = {'Source': 'https://github.com/Engineero/spacetracktool'}
 PACKAGES = find_packages(exclude=['contrib', 'docs', 'tests*'])
 INSTALL_REQUIRES = ['requests']
 
-setup(name=Name,
+setup(name=NAME,
       version=VERSION,
       description=DESCRIPTION,
       long_description=LONG_DESCRIPTION,
