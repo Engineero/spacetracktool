@@ -20,7 +20,7 @@ class TestSpaceTrackClient(unittest.TestCase):
     def test_tle_query(self):
         with self.assertRaisesRegex(requests.exceptions.HTTPError,
                                     '401 Client Error',
-                                    'Unexpected requests error raised!'):
+                                    msg='Unexpected requests error raised!'):
             self.client.tle_query(norad_cat_id=12345)
         self.assertEqual(self.client.print_query(),
                          'https://space-track.org/basicspacedata/query/class/tle/NORAD_CAT_ID/12345/format/json',
