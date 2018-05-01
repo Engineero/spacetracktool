@@ -1,6 +1,10 @@
 CHANGES
 =======
 
+0.1.0b1
+-------
+
+* Updated ChangeLog with setup.py
 * Updated unit tests, fixed some bugs all over the place
 
 0.1.0b0
