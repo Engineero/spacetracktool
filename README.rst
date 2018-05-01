@@ -26,6 +26,6 @@ To create a slightly more complicated query, using ranges for some arguments::
 
 The official documents for the `space-track.org API can be found here`__.
 
-__ https://www.space-track.org/documentation#/api
+__ https://www.space-track.org/documentation
 
 .. _space-track.org: https://www.space-track.org/auth/login
