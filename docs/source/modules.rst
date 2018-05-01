@@ -1,7 +1,7 @@
-spacetrack
-==========
+spacetracktool
+==============
 
 .. toctree::
    :maxdepth: 4
 
-   spacetrack
+   spacetracktool
