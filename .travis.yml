@@ -10,6 +10,6 @@ install:
 # Command to run tests
 script:
   - python -m unittest discover -t ..
-branches:
-  only:
-  - master
+#branches:
+#  only:
+#  - master
