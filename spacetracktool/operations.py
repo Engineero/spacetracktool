@@ -11,22 +11,29 @@ def make_range_string(start: str=None, end: str=None, equal: bool=False) -> str:
         performed on the input strings to ensure the result is a valid range.
         
         Kwargs:
+
             start: str or value coercable to str.
                 The starting (lowest) value of the string. Default is None.
+
             end: str or value coercable to str.
                 The end (highest) value of the string. Default is None.
+
             equal: if True, returns `start` if defined, otherwise `end`.  If
                 False, returns a range based on values of `start` and `end`.
                 Default is False.
         
         Returns:
+
             Resulting range string.
         
         Raises:
+
             ValueError: if neither `start` nor `end` is specified and `equal`
                 is `True`.
+
             ValueError: if neither `start` nor `end` (or both) is specified and
                 `equal` is `False`.
+
             ValueError: if start or end cannot be coerced to string.
 
         """

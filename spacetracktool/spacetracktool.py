@@ -17,15 +17,19 @@ class SpaceTrackClient():
     """ Provides an API for making POST requests to space-track.org
     
     Args:
+
         username: your space-track.org username.
+
         password: the associated password.
 
     Kwargs:
+
         fmt: string specifying format for returned message. Can be one of
             'xml', 'json', 'html', 'csv', 'tle', '3le', 'kvn', or None.
             None is the same as 'json'. Default is None.
 
     Properties:
+
         result: the result string returned from space-track.org by the last-run
             submit command.
 
@@ -71,7 +75,9 @@ class SpaceTrackClient():
         """ Logs out of the space-track.org session.
         
         Returns:
+
             Response from space-track.org
+
         """
         res = requests.post(self.logout_url)
         if not res.ok:
@@ -91,7 +97,9 @@ class SpaceTrackClient():
         """ Compiles the query (list of strings) into a '/'-separated string.
         
         Returns:
+
             The query string with each element separated by a forward-slash.
+
         """
         if self._fmt not in self._query:
             self._query.extend(['format', self._fmt])
@@ -103,6 +111,7 @@ class SpaceTrackClient():
         Note that at this stage the format string has not been applied to the
         query. This string gets applied at the very end prior to submitting the
         POST request.
+
         """
         query_string = '/'.join(self._query)
         print('/'.join(self._query))
@@ -112,7 +121,9 @@ class SpaceTrackClient():
         """ Submits the generated query to space-track.org.
         
         Returns:
+
             Response from space-track.org
+
         """
         payload = {'identity': self.username,
                    'password': self.password,
@@ -128,10 +139,13 @@ class SpaceTrackClient():
         """ Specifies a "value equals ___" query.
         
         Args:
+
             key: the key to add to the query string
+
             value: the value to search for
 
         Raises:
+
             ValueError: if key or value are not of type string and cannot be
                 coerced into a string.
 
@@ -176,6 +190,7 @@ class SpaceTrackClient():
             >> result = query.submit()
 
         Keyword Args:
+
             norad_cat_id: int or str
                 The norad catalog ID of a satellite. Should be a single value.
 
@@ -251,9 +266,11 @@ class SpaceTrackClient():
                 or a range.
 
         Returns:
+
             The result of the query to space-track.org
 
         Raises:
+
             IndexError: if no keyword arguments are provided
         
         """
