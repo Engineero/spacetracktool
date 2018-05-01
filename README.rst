@@ -1,6 +1,9 @@
 SpaceTrackTool
 ==============
 
+.. image:: https://travis-ci.org/Engineero/spacetracktool.svg?branch=develop
+    :target: https://travis-ci.org/Engineero/spacetracktool
+
 .. highlight:: python
 
 A Python API for making queries to space-track.org_. To install::
