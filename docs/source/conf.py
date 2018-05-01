@@ -14,19 +14,19 @@
 #
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../../spacetrack'))
+sys.path.insert(0, os.path.abspath('../..'))
 
 
 # -- Project information -----------------------------------------------------
 
-project = 'spacetrack'
-copyright = '2018, Nathan L. Toner'
-author = 'Nathan L. Toner'
+project = 'spacetracktool'
+copyright = '2018, Engineero'
+author = 'Engineero'
 
 # The short X.Y version
 version = ''
 # The full version, including alpha/beta/rc tags
-release = ''
+release = '0.1.0b2'
 
 
 # -- General configuration ---------------------------------------------------
@@ -40,10 +40,8 @@ release = ''
 # ones.
 extensions = [
     'sphinx.ext.autodoc',
+    #'sphinxcontrib.napoleon',
     'sphinx_autodoc_napoleon_typehints',
-    'sphinx.ext.doctest',
-    'sphinx.ext.todo',
-    'sphinx.ext.coverage',
     'sphinx.ext.mathjax',
     'sphinx.ext.viewcode',
     'sphinx.ext.githubpages',
@@ -109,7 +107,7 @@ html_static_path = ['_static']
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'spacetrackdoc'
+htmlhelp_basename = 'spacetracktooldoc'
 
 
 # -- Options for LaTeX output ------------------------------------------------
@@ -136,8 +134,8 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'spacetrack.tex', 'spacetrack Documentation',
-     'Nathan L. Toner', 'manual'),
+    (master_doc, 'spacetracktool.tex', 'spacetracktool Documentation',
+     'Engineero', 'manual'),
 ]
 
 
@@ -146,7 +144,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'spacetrack', 'spacetrack Documentation',
+    (master_doc, 'spacetracktool', 'spacetracktool Documentation',
      [author], 1)
 ]
 
@@ -157,15 +155,10 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'spacetrack', 'spacetrack Documentation',
-     author, 'spacetrack', 'One line description of project.',
+    (master_doc, 'spacetracktool', 'spacetracktool Documentation',
+     author, 'spacetracktool', 'One line description of project.',
      'Miscellaneous'),
 ]
 
 
 # -- Extension configuration -------------------------------------------------
-
-# -- Options for todo extension ----------------------------------------------
-
-# If true, `todo` and `todoList` produce output, else they produce nothing.
-todo_include_todos = True
