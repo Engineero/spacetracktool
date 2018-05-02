@@ -10,6 +10,7 @@ command).
 
 
 import requests
+import warnings
 from . import operations as ops
 
 
@@ -189,10 +190,10 @@ class SpaceTrackClient():
         """
         for k in kwargs.keys():
             if k not in key_list:
-                raise KeyError(f'Unexpected argument {k} given!',
-                               'If you believe this is a valid key, please',
-                               'submit a pull request or open an issue on',
-                               'GitHub.')
+                err_msg = ('Unexpected argument {} given! '.format(k) +
+                           'If you believe this is a valid key, please ' +
+                           'submit a pull request or open an issue on GitHub.')
+                raise KeyError(err_msg)
         for key in key_list:
             if key in kwargs.keys():
                 self._value_query(key.upper(), kwargs.pop(key))
@@ -426,7 +427,7 @@ class SpaceTrackClient():
         self._make_query(key_list, kwargs)
         return self.submit()
 
-    def box_tle_publish(self, **kwargs):
+    def tle_publish_query(self, **kwargs):
         """ Initiates a tle_publish query request.
 
         Returns:
@@ -637,8 +638,8 @@ class SpaceTrackClient():
             KeyError: if any provided key is not in the expected argument list
         
         """
-        raise NotImplementedError('Expanded space data queries are not',
-                                  'supported at this time.')
+        warnings.warn('Expanded space data queries are not supported at this time.',
+                      Warning)
         if len(kwargs) == 0:
             raise IndexError('Must supply at least one keyword argument!')
         key_list = ['constellation', 'cdm_id', 'filename', 'insert_epoch',
@@ -780,8 +781,8 @@ class SpaceTrackClient():
             KeyError: if any provided key is not in the expected argument list
         
         """
-        raise NotImplementedError('Expanded space data queries are not',
-                                  'supported at this time.')
+        warnings.warn('Expanded space data queries are not supported at this time.',
+                      Warning)
         if len(kwargs) == 0:
             raise IndexError('Must supply at least one keyword argument!')
         key_list = ['gid', 'org_name', 'constellation', 'info_id', 'info_type',
