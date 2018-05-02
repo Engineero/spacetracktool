@@ -308,6 +308,8 @@ class SpaceTrackClient():
 
     def satcat_query(self):
         """ Initiates a satcat query request. """
+        raise NotImplementedError('This method is under construction.',
+                                  "If you'd like to help, please submit a pull request!") 
         self._start_query()
         self._query.extend(['class', 'satcat'])
         return self.submit()
