@@ -9,14 +9,14 @@ command).
 """
 
 
-import requests
 import warnings
-from . import operations as ops
+import requests
 
 
-class SpaceTrackClient():
+# pylint: disable=unused-variable
+class SpaceTrackClient:
     """ Provides an API for making POST requests to space-track.org
-    
+
     Args:
 
         username: your space-track.org username.
@@ -35,13 +35,13 @@ class SpaceTrackClient():
             submit command.
 
     Examples::
-    
+
         >> import spacetracktool as st
         >> import spacetracktool.operations as ops
         >> client = SpaceTrackClient(username, password)
         >> client.tle_query(norad_cat_id=12345)
         >> result = client.submit()
-    
+
         >> date_range = ops.make_range_string('2018-01-01', '2018-01-31')
         >> client.tle_query(epoch=date_range)  # throws out previous query!
         >> new_result = client.submit()
@@ -54,19 +54,20 @@ class SpaceTrackClient():
 
     def __init__(self, username: str, password: str, fmt: str=None):
         """ Initializes the API.
-        
+
         Raises:
             ValueError: if provided fmt is not one of the specified options.
 
         """
         valid_fmt = ['xml', 'json', 'html', 'csv', 'tle', '3le', 'kvn']
         if fmt is not None:
-            if fmt.lower() not in valid_fmt:
+            # pylint: disable=not-callable
+            self._fmt = fmt.lower()
+            if self._fmt not in valid_fmt:
                 raise ValueError("fmt must be one of 'xml', 'json', 'html', \
                                  'csv', 'tle', '3le', 'kvn', or None.")
         else:
-            fmt = 'json'
-        self._fmt = fmt.lower()
+            self._fmt = 'json'
         self.username = username
         self.password = password
         self._query = []  # placeholder for our query string
@@ -74,7 +75,7 @@ class SpaceTrackClient():
 
     def _logout(self) -> requests.models.Response:
         """ Logs out of the space-track.org session.
-        
+
         Returns:
 
             Response from space-track.org
@@ -105,7 +106,7 @@ class SpaceTrackClient():
 
     def _compile_query(self) -> str:
         """ Compiles the query (list of strings) into a '/'-separated string.
-        
+
         Returns:
 
             The query string with each element separated by a forward-slash.
@@ -117,7 +118,7 @@ class SpaceTrackClient():
 
     def print_query(self):
         """ Prints the query to the screen.
-        
+
         Note that at this stage the format string has not been applied to the
         query. This string gets applied at the very end prior to submitting the
         POST request.
@@ -129,7 +130,7 @@ class SpaceTrackClient():
 
     def submit(self) -> requests.models.Response:
         """ Submits the generated query to space-track.org.
-        
+
         Returns:
 
             Response from space-track.org
@@ -141,14 +142,15 @@ class SpaceTrackClient():
         self.result = requests.post(self.login_url, data=payload)
         if not self.result.ok:
             print('Error posting request! Status code {}'.format(
-                        self.result.status_code))
+                self.result.status_code))
+            # pylint: disable=not-callable
             self.result.raise_for_status()  # raise HTTP error
         self._logout()
         return self.result
 
     def _value_query(self, key: str, value: str):
         """ Specifies a "value equals ___" query.
-        
+
         Args:
 
             key: the key to add to the query string
@@ -164,15 +166,15 @@ class SpaceTrackClient():
         if not isinstance(key, str):
             try:
                 key = str(key)
-            except Exception as e:
-                print(e)
+            except Exception as excep:
+                print(excep)
                 raise ValueError('key argument must be a string or',
                                  'coercable to string!')
         if not isinstance(value, str):
             try:
                 value = str(value)
-            except Exception as e:
-                print(e)
+            except Exception as excep:
+                print(excep)
                 raise ValueError('value argument must be a string or',
                                  'coercable to string!')
         self._query.extend([key, value])
@@ -188,6 +190,7 @@ class SpaceTrackClient():
             KeyError: if a key is given that is not in the key list
 
         """
+        # pylint: disable=not-callable
         for k in kwargs.keys():
             if k not in key_list:
                 err_msg = ('Unexpected argument {} given! '.format(k) +
@@ -195,12 +198,13 @@ class SpaceTrackClient():
                            'submit a pull request or open an issue on GitHub.')
                 raise KeyError(err_msg)
         for key in key_list:
+            # pylint: disable=not-callable
             if key in kwargs.keys():
                 self._value_query(key.upper(), kwargs.pop(key))
 
     def tle_query(self, **kwargs):
         """ Initiates a TLE query request.
-        
+
         Any number of keyword arguments that are defined by the space-track.org
         API may be provided. Single value arguments are easy and should be
         passed a string or an object that can be coerced to a string::
@@ -294,7 +298,7 @@ class SpaceTrackClient():
         Raises:
             IndexError: if no keyword arguments are provided
             KeyError: if any provided key is not in the expected argument list
-        
+
         """
         if len(kwargs) == 0:
             raise IndexError('Must supply at least one keyword argument!')
@@ -314,7 +318,7 @@ class SpaceTrackClient():
 
     def tle_latest_query(self, **kwargs):
         """ Initiates a TLE_latest query request.
-        
+
         Any number of keyword arguments that are defined by the space-track.org
         API may be provided. Single value arguments are easy and should be
         passed a string or an object that can be coerced to a string::
@@ -409,7 +413,7 @@ class SpaceTrackClient():
         Raises:
             IndexError: if no keyword arguments are provided
             KeyError: if any provided key is not in the expected argument list
-        
+
         """
         if len(kwargs) == 0:
             raise IndexError('Must supply at least one keyword argument!')
@@ -436,7 +440,7 @@ class SpaceTrackClient():
         Raises:
             IndexError: if no keyword arguments are provided
             KeyError: if any provided key is not in the expected argument list
-        
+
         """
         if len(kwargs) == 0:
             raise IndexError('Must supply at least one keyword argument!')
@@ -455,7 +459,7 @@ class SpaceTrackClient():
         Raises:
             IndexError: if no keyword arguments are provided
             KeyError: if any provided key is not in the expected argument list
-        
+
         """
         if len(kwargs) == 0:
             raise IndexError('Must supply at least one keyword argument!')
@@ -479,7 +483,7 @@ class SpaceTrackClient():
         Raises:
             IndexError: if no keyword arguments are provided
             KeyError: if any provided key is not in the expected argument list
-        
+
         """
         if len(kwargs) == 0:
             raise IndexError('Must supply at least one keyword argument!')
@@ -503,7 +507,7 @@ class SpaceTrackClient():
         Raises:
             IndexError: if no keyword arguments are provided
             KeyError: if any provided key is not in the expected argument list
-        
+
         """
         if len(kwargs) == 0:
             raise IndexError('Must supply at least one keyword argument!')
@@ -522,7 +526,7 @@ class SpaceTrackClient():
         Raises:
             IndexError: if no keyword arguments are provided
             KeyError: if any provided key is not in the expected argument list
-        
+
         """
         if len(kwargs) == 0:
             raise IndexError('Must supply at least one keyword argument!')
@@ -545,7 +549,7 @@ class SpaceTrackClient():
         Raises:
             IndexError: if no keyword arguments are provided
             KeyError: if any provided key is not in the expected argument list
-        
+
         """
         if len(kwargs) == 0:
             raise IndexError('Must supply at least one keyword argument!')
@@ -572,14 +576,14 @@ class SpaceTrackClient():
         Raises:
             IndexError: if no keyword arguments are provided
             KeyError: if any provided key is not in the expected argument list
-        
+
         """
         if len(kwargs) == 0:
             raise IndexError('Must supply at least one keyword argument!')
         key_list = ['norad_cat_id', 'object_number', 'object_name', 'intldes',
                     'object_id', 'rcs', 'rcs_size', 'country', 'msg_epoch',
                     'decay_epoch', 'source', 'msg_type', 'precedence']
-        if 'precedence' not in kwargs.keys():
+        if 'precedence' not in list(kwargs.keys()):
             kwargs['precedence'] = 2  # default to decay announcements
         self._start_query()
         self._query.extend(['class', 'decay'])
@@ -595,7 +599,7 @@ class SpaceTrackClient():
         Raises:
             IndexError: if no keyword arguments are provided
             KeyError: if any provided key is not in the expected argument list
-        
+
         """
         if len(kwargs) == 0:
             raise IndexError('Must supply at least one keyword argument!')
@@ -616,7 +620,7 @@ class SpaceTrackClient():
         Raises:
             IndexError: if no keyword arguments are provided
             KeyError: if any provided key is not in the expected argument list
-        
+
         """
         if len(kwargs) == 0:
             raise IndexError('Must supply at least one keyword argument!')
@@ -636,7 +640,7 @@ class SpaceTrackClient():
         Raises:
             IndexError: if no keyword arguments are provided
             KeyError: if any provided key is not in the expected argument list
-        
+
         """
         warnings.warn('Expanded space data queries are not supported at this time.',
                       Warning)
@@ -779,7 +783,7 @@ class SpaceTrackClient():
         Raises:
             IndexError: if no keyword arguments are provided
             KeyError: if any provided key is not in the expected argument list
-        
+
         """
         warnings.warn('Expanded space data queries are not supported at this time.',
                       Warning)
@@ -795,16 +799,20 @@ class SpaceTrackClient():
 
     @property
     def base(self):
+        """ Returns URL base string. """
         return type(self)._base
 
     @property
     def login_url(self):
+        """ Returns login URL string. """
         return type(self)._login_url
 
     @property
     def logout_url(self):
+        """ Returns logout URL string. """
         return type(self)._logout_url
 
     @property
     def null(self):
+        """ Returns space-track.org's null string. """
         return type(self)._null
