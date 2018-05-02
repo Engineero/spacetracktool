@@ -9,7 +9,7 @@ with open ('README.rst', 'r') as readme_file:
     README = readme_file.read()
 
 NAME = 'spacetracktool'
-VERSION = '0.1.0b5'
+VERSION = '0.1.0b6'
 DESCRIPTION = 'A Python API for querying space-track.org'
 LONG_DESCRIPTION_CONTENT_TYPE = 'text/x-rst'
 URL = 'https://github.com/Engineero/spacetracktool'
