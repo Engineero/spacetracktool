@@ -5,21 +5,21 @@ SpaceTrackTool
 Master branch
 ------------------
 
-|travis| |coveralls|
+|travis_m| |coveralls_m|
 
-.. |travis| image:: https://travis-ci.org/Engineero/spacetracktool.svg?branch=master
+.. |travis_m| image:: https://travis-ci.org/Engineero/spacetracktool.svg?branch=master
    :target: https://travis-ci.org/Engineero/spacetracktool
-.. |coveralls| image:: https://coveralls.io/repos/github/Engineero/spacetracktool/badge.svg?branch=master
+.. |coveralls_m| image:: https://coveralls.io/repos/github/Engineero/spacetracktool/badge.svg?branch=master
    :target: https://coveralls.io/github/Engineero/spacetracktool?branch=master
 
 Development branch
 ------------------
 
-|travis| |coveralls|
+|travis_d| |coveralls_d|
 
-.. |travis| image:: https://travis-ci.org/Engineero/spacetracktool.svg?branch=develop
+.. |travis_d| image:: https://travis-ci.org/Engineero/spacetracktool.svg?branch=develop
    :target: https://travis-ci.org/Engineero/spacetracktool
-.. |coveralls| image:: https://coveralls.io/repos/github/Engineero/spacetracktool/badge.svg?branch=develop
+.. |coveralls_d| image:: https://coveralls.io/repos/github/Engineero/spacetracktool/badge.svg?branch=develop
    :target: https://coveralls.io/github/Engineero/spacetracktool?branch=develop
 
 
