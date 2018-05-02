@@ -1,0 +1,624 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>spacetracktool package &#8212; spacetracktool 0.1.0b2 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="spacetracktool-package">
+<h1>spacetracktool package<a class="headerlink" href="#spacetracktool-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-spacetracktool.operations">
+<span id="spacetracktool-operations-module"></span><h2>spacetracktool.operations module<a class="headerlink" href="#module-spacetracktool.operations" title="Permalink to this headline">¶</a></h2>
+<p>Operations for use with the SpaceTrackClient.</p>
+<dl class="function">
+<dt id="spacetracktool.operations.make_range_string">
+<code class="descclassname">spacetracktool.operations.</code><code class="descname">make_range_string</code><span class="sig-paren">(</span><em>start=None</em>, <em>end=None</em>, <em>equal=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/spacetracktool/operations.html#make_range_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spacetracktool.operations.make_range_string" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></td>
+</tr>
+</tbody>
+</table>
+<p>Generates a string based on input range and mode.</p>
+<p>If <cite>equal</cite> is True, returns <cite>start</cite> or <cite>end</cite> (if <cite>start</cite> is None). If
+<cite>equal</cite> is False, retruns <cite>‘&gt;[start]’</cite> if only <cite>start</cite> is given,
+returns <cite>‘&lt;[end]’</cite> if only <cite>end</cite> is given, and returns
+<cite>‘[start]–[end]’</cite> if both are given. Note that no range checking is
+performed on the input strings to ensure the result is a valid range.</p>
+<p>Kwargs:</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>start: str or value coercable to str.</dt>
+<dd>The starting (lowest) value of the string. Default is None.</dd>
+<dt>end: str or value coercable to str.</dt>
+<dd>The end (highest) value of the string. Default is None.</dd>
+<dt>equal: if True, returns <cite>start</cite> if defined, otherwise <cite>end</cite>.  If</dt>
+<dd>False, returns a range based on values of <cite>start</cite> and <cite>end</cite>.
+Default is False.</dd>
+</dl>
+</div></blockquote>
+<p>Returns:</p>
+<blockquote>
+<div>Resulting range string.</div></blockquote>
+<p>Raises:</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>ValueError: if neither <cite>start</cite> nor <cite>end</cite> is specified and <cite>equal</cite></dt>
+<dd>is <cite>True</cite>.</dd>
+<dt>ValueError: if neither <cite>start</cite> nor <cite>end</cite> (or both) is specified and</dt>
+<dd><cite>equal</cite> is <cite>False</cite>.</dd>
+</dl>
+<p>ValueError: if start or end cannot be coerced to string.</p>
+</div></blockquote>
+</dd></dl>
+
+</div>
+<div class="section" id="module-spacetracktool.spacetrackclient">
+<span id="spacetracktool-spacetrackclient-module"></span><h2>spacetracktool.spacetrackclient module<a class="headerlink" href="#module-spacetracktool.spacetrackclient" title="Permalink to this headline">¶</a></h2>
+<p>Defines the space-track.org query client.</p>
+<p>Queries to space-track.org are made by first creating a client instance, and
+then calling the appropriate method for your desired query type. Multiple
+queries may be created with the same client, but each new query type overwrites
+the previous query (cannot run multiple concurrent queries with a singel submit
+command).</p>
+<dl class="class">
+<dt id="spacetracktool.spacetrackclient.SpaceTrackClient">
+<em class="property">class </em><code class="descclassname">spacetracktool.spacetrackclient.</code><code class="descname">SpaceTrackClient</code><span class="sig-paren">(</span><em>username</em>, <em>password</em>, <em>fmt=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/spacetracktool/spacetrackclient.html#SpaceTrackClient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spacetracktool.spacetrackclient.SpaceTrackClient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Provides an API for making POST requests to space-track.org</p>
+<p>Args:</p>
+<blockquote>
+<div><p>username: your space-track.org username.</p>
+<p>password: the associated password.</p>
+</div></blockquote>
+<p>Kwargs:</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>fmt: string specifying format for returned message. Can be one of</dt>
+<dd>‘xml’, ‘json’, ‘html’, ‘csv’, ‘tle’, ‘3le’, ‘kvn’, or None.
+None is the same as ‘json’. Default is None.</dd>
+</dl>
+</div></blockquote>
+<p>Properties:</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>result: the result string returned from space-track.org by the last-run</dt>
+<dd>submit command.</dd>
+</dl>
+</div></blockquote>
+<p>Examples:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span> <span class="kn">import</span> <span class="nn">spacetracktool</span> <span class="k">as</span> <span class="nn">st</span>
+<span class="o">&gt;&gt;</span> <span class="kn">import</span> <span class="nn">spacetracktool.operations</span> <span class="k">as</span> <span class="nn">ops</span>
+<span class="o">&gt;&gt;</span> <span class="n">client</span> <span class="o">=</span> <span class="n">SpaceTrackClient</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+<span class="o">&gt;&gt;</span> <span class="n">client</span><span class="o">.</span><span class="n">tle_query</span><span class="p">(</span><span class="n">norad_cat_id</span><span class="o">=</span><span class="mi">12345</span><span class="p">)</span>
+<span class="o">&gt;&gt;</span> <span class="n">result</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">submit</span><span class="p">()</span>
+
+<span class="o">&gt;&gt;</span> <span class="n">date_range</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">make_range_string</span><span class="p">(</span><span class="s1">&#39;2018-01-01&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-01-31&#39;</span><span class="p">)</span>
+<span class="o">&gt;&gt;</span> <span class="n">client</span><span class="o">.</span><span class="n">tle_query</span><span class="p">(</span><span class="n">epoch</span><span class="o">=</span><span class="n">date_range</span><span class="p">)</span>  <span class="c1"># throws out previous query!</span>
+<span class="o">&gt;&gt;</span> <span class="n">new_result</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">submit</span><span class="p">()</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="spacetracktool.spacetrackclient.SpaceTrackClient.announcement_query">
+<code class="descname">announcement_query</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/spacetracktool/spacetrackclient.html#SpaceTrackClient.announcement_query"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spacetracktool.spacetrackclient.SpaceTrackClient.announcement_query" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initiates a announcement request.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>The result of the query to space-track.org</dd>
+<dt>Raises:</dt>
+<dd>IndexError: if no keyword arguments are provided
+KeyError: if any provided key is not in the expected argument list</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="spacetracktool.spacetrackclient.SpaceTrackClient.base">
+<code class="descname">base</code><a class="headerlink" href="#spacetracktool.spacetrackclient.SpaceTrackClient.base" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spacetracktool.spacetrackclient.SpaceTrackClient.box_score_query">
+<code class="descname">box_score_query</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/spacetracktool/spacetrackclient.html#SpaceTrackClient.box_score_query"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spacetracktool.spacetrackclient.SpaceTrackClient.box_score_query" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initiates a boxscore query request.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>The result of the query to space-track.org</dd>
+<dt>Raises:</dt>
+<dd>IndexError: if no keyword arguments are provided
+KeyError: if any provided key is not in the expected argument list</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spacetracktool.spacetrackclient.SpaceTrackClient.cdm_query">
+<code class="descname">cdm_query</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/spacetracktool/spacetrackclient.html#SpaceTrackClient.cdm_query"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spacetracktool.spacetrackclient.SpaceTrackClient.cdm_query" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initiates a cdm request.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>The result of the query to space-track.org</dd>
+<dt>Raises:</dt>
+<dd>IndexError: if no keyword arguments are provided
+KeyError: if any provided key is not in the expected argument list</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spacetracktool.spacetrackclient.SpaceTrackClient.decay_query">
+<code class="descname">decay_query</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/spacetracktool/spacetrackclient.html#SpaceTrackClient.decay_query"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spacetracktool.spacetrackclient.SpaceTrackClient.decay_query" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initiates a decay request.</p>
+<p>Note that if the ‘precedence’ argument is not provided, it will default
+to a precedence of 2, which means messages that specifically announce
+that the object has decayed.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>The result of the query to space-track.org</dd>
+<dt>Raises:</dt>
+<dd>IndexError: if no keyword arguments are provided
+KeyError: if any provided key is not in the expected argument list</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spacetracktool.spacetrackclient.SpaceTrackClient.launch_site_query">
+<code class="descname">launch_site_query</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/spacetracktool/spacetrackclient.html#SpaceTrackClient.launch_site_query"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spacetracktool.spacetrackclient.SpaceTrackClient.launch_site_query" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initiates a launch_site request.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>The result of the query to space-track.org</dd>
+<dt>Raises:</dt>
+<dd>IndexError: if no keyword arguments are provided
+KeyError: if any provided key is not in the expected argument list</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="spacetracktool.spacetrackclient.SpaceTrackClient.login_url">
+<code class="descname">login_url</code><a class="headerlink" href="#spacetracktool.spacetrackclient.SpaceTrackClient.login_url" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="spacetracktool.spacetrackclient.SpaceTrackClient.logout_url">
+<code class="descname">logout_url</code><a class="headerlink" href="#spacetracktool.spacetrackclient.SpaceTrackClient.logout_url" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="spacetracktool.spacetrackclient.SpaceTrackClient.null">
+<code class="descname">null</code><a class="headerlink" href="#spacetracktool.spacetrackclient.SpaceTrackClient.null" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spacetracktool.spacetrackclient.SpaceTrackClient.organization_query">
+<code class="descname">organization_query</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/spacetracktool/spacetrackclient.html#SpaceTrackClient.organization_query"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spacetracktool.spacetrackclient.SpaceTrackClient.organization_query" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initiates a organization request.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>The result of the query to space-track.org</dd>
+<dt>Raises:</dt>
+<dd>IndexError: if no keyword arguments are provided
+KeyError: if any provided key is not in the expected argument list</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spacetracktool.spacetrackclient.SpaceTrackClient.print_query">
+<code class="descname">print_query</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/spacetracktool/spacetrackclient.html#SpaceTrackClient.print_query"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spacetracktool.spacetrackclient.SpaceTrackClient.print_query" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prints the query to the screen.</p>
+<p>Note that at this stage the format string has not been applied to the
+query. This string gets applied at the very end prior to submitting the
+POST request.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="spacetracktool.spacetrackclient.SpaceTrackClient.satcat_change_query">
+<code class="descname">satcat_change_query</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/spacetracktool/spacetrackclient.html#SpaceTrackClient.satcat_change_query"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spacetracktool.spacetrackclient.SpaceTrackClient.satcat_change_query" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initiates a satcat_change request.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>The result of the query to space-track.org</dd>
+<dt>Raises:</dt>
+<dd>IndexError: if no keyword arguments are provided
+KeyError: if any provided key is not in the expected argument list</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spacetracktool.spacetrackclient.SpaceTrackClient.satcat_debut_query">
+<code class="descname">satcat_debut_query</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/spacetracktool/spacetrackclient.html#SpaceTrackClient.satcat_debut_query"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spacetracktool.spacetrackclient.SpaceTrackClient.satcat_debut_query" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initiates a satcat_debut request.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>The result of the query to space-track.org</dd>
+<dt>Raises:</dt>
+<dd>IndexError: if no keyword arguments are provided
+KeyError: if any provided key is not in the expected argument list</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spacetracktool.spacetrackclient.SpaceTrackClient.satcat_query">
+<code class="descname">satcat_query</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/spacetracktool/spacetrackclient.html#SpaceTrackClient.satcat_query"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spacetracktool.spacetrackclient.SpaceTrackClient.satcat_query" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initiates a satcat query request.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>The result of the query to space-track.org</dd>
+<dt>Raises:</dt>
+<dd>IndexError: if no keyword arguments are provided
+KeyError: if any provided key is not in the expected argument list</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spacetracktool.spacetrackclient.SpaceTrackClient.submit">
+<code class="descname">submit</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/spacetracktool/spacetrackclient.html#SpaceTrackClient.submit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spacetracktool.spacetrackclient.SpaceTrackClient.submit" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">Response</span></code></td>
+</tr>
+</tbody>
+</table>
+<p>Submits the generated query to space-track.org.</p>
+<p>Returns:</p>
+<blockquote>
+<div>Response from space-track.org</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="spacetracktool.spacetrackclient.SpaceTrackClient.tip_query">
+<code class="descname">tip_query</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/spacetracktool/spacetrackclient.html#SpaceTrackClient.tip_query"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spacetracktool.spacetrackclient.SpaceTrackClient.tip_query" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initiates a tracking and impact prediction (TIP) request.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>The result of the query to space-track.org</dd>
+<dt>Raises:</dt>
+<dd>IndexError: if no keyword arguments are provided
+KeyError: if any provided key is not in the expected argument list</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spacetracktool.spacetrackclient.SpaceTrackClient.tle_latest_query">
+<code class="descname">tle_latest_query</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/spacetracktool/spacetrackclient.html#SpaceTrackClient.tle_latest_query"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spacetracktool.spacetrackclient.SpaceTrackClient.tle_latest_query" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initiates a TLE_latest query request.</p>
+<p>Any number of keyword arguments that are defined by the space-track.org
+API may be provided. Single value arguments are easy and should be
+passed a string or an object that can be coerced to a string:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span> <span class="kn">import</span> <span class="nn">spacetracktool</span> <span class="k">as</span> <span class="nn">st</span>
+<span class="o">&gt;&gt;</span> <span class="n">query</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">SpaceTrackClient</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="s1">&#39;password&#39;</span><span class="p">)</span>
+<span class="o">&gt;&gt;</span> <span class="n">result</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">tle_latest_query</span><span class="p">(</span><span class="n">norad_cat_id</span><span class="o">=</span><span class="mi">12345</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Range arugment strings should be built with the
+spacetracktool.operations.make_range_string method. For example, to
+provide a date range to the <cite>epoch</cite> argument:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span> <span class="kn">import</span> <span class="nn">spacetracktool</span> <span class="k">as</span> <span class="nn">st</span>
+<span class="o">&gt;&gt;</span> <span class="kn">from</span> <span class="nn">spacetracktool</span> <span class="k">import</span> <span class="n">operations</span> <span class="k">as</span> <span class="n">ops</span>
+<span class="o">&gt;&gt;</span> <span class="n">date_range</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">make_range_string</span><span class="p">(</span><span class="s1">&#39;2018-01-01&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-01-31&#39;</span><span class="p">)</span>
+<span class="o">&gt;&gt;</span> <span class="n">query</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">SpaceTrackClient</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="s1">&#39;password&#39;</span><span class="p">)</span>
+<span class="o">&gt;&gt;</span> <span class="n">result</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">tle_latest_query</span><span class="p">(</span><span class="n">epoch</span><span class="o">=</span><span class="n">date_range</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>Keyword Args:</dt>
+<dd><p class="first">ordinal: int or str
+comment: str
+originator: str
+norad_cat_id: int or str</p>
+<blockquote>
+<div>The norad catalog ID of a satellite. Should be a single value.</div></blockquote>
+<dl class="docutils">
+<dt>object_name: str</dt>
+<dd>The name string associated with an object. Should be a single
+value.</dd>
+<dt>object_type: int or str</dt>
+<dd>The catalog object type. Should be a single value.</dd>
+</dl>
+<p>classification_type: str
+intldes: str
+epoch: str</p>
+<blockquote>
+<div><p>The epoch date or date range in which to search. May be a single
+value or a range. Dates should be specified in ether of the
+followingthe formats:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;YYYY-MM-DD HH:mm:ss&#39;</span>
+<span class="s1">&#39;YYYY-MM-DD&#39;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>epoch_microseconds: str
+mean_motion: float or str</p>
+<blockquote>
+<div>The mean motion to search in revolutions per day. May be a
+single value or a range.</div></blockquote>
+<dl class="docutils">
+<dt>eccentricity: float or str</dt>
+<dd>The eccentricity to search. May be a single value or a range.</dd>
+<dt>inclination: float or str</dt>
+<dd>The inclination to search in degrees. May be a single value or
+a range.</dd>
+<dt>ra_of_asc_node: float or str</dt>
+<dd>The right-ascension of the ascending node to search in degrees.
+May be a single value or a range.</dd>
+<dt>arg_of_pericenter: float or str</dt>
+<dd>The argument of the pericenter to search. May be a single value
+or a range.</dd>
+<dt>mean_anomaly: float or str</dt>
+<dd>The mean anomaly to search. May be a single value or a range.</dd>
+</dl>
+<p>ephemeris_type: int or str
+element_set_no: int or str</p>
+<blockquote>
+<div>The element set number to search. Should be a single value.</div></blockquote>
+<dl class="docutils">
+<dt>rev_at_epoch: float or str</dt>
+<dd>The revolution at epoch to search. May be a single value or a
+range.</dd>
+<dt>bstar: float or str</dt>
+<dd>The b-star drag coefficient to search. May be a single value
+or a range.</dd>
+<dt>mean_motion_dot: float or str</dt>
+<dd>The first derivative of the mean motion with respect to time.
+May be a single value or a range.</dd>
+<dt>mean_motion_ddot: float or str</dt>
+<dd>The second derivative of the mean motion with respect to time.
+May be a single value or a range.</dd>
+</dl>
+<p>file: int or str
+tle_line0: str
+tle_line1: str
+tle_line2: str
+object_id: str
+object_number: int or str
+semimajor_axis: float or str</p>
+<blockquote>
+<div>The semimajor axis in Earth radii. May be a single value or a
+range.</div></blockquote>
+<dl class="last docutils">
+<dt>period: float or str</dt>
+<dd>The orbital period in days. May be single value or a range.</dd>
+<dt>apogee: float or str</dt>
+<dd>The radius when furthest from the Earth. May be a single value
+or a range.</dd>
+<dt>perigee: float or str</dt>
+<dd>The radius when furthest from the Earth. May be a single value
+or a range.</dd>
+</dl>
+</dd>
+<dt>Returns:</dt>
+<dd>The result of the query to space-track.org</dd>
+<dt>Raises:</dt>
+<dd>IndexError: if no keyword arguments are provided
+KeyError: if any provided key is not in the expected argument list</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spacetracktool.spacetrackclient.SpaceTrackClient.tle_publish_query">
+<code class="descname">tle_publish_query</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/spacetracktool/spacetrackclient.html#SpaceTrackClient.tle_publish_query"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spacetracktool.spacetrackclient.SpaceTrackClient.tle_publish_query" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initiates a tle_publish query request.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>The result of the query to space-track.org</dd>
+<dt>Raises:</dt>
+<dd>IndexError: if no keyword arguments are provided
+KeyError: if any provided key is not in the expected argument list</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spacetracktool.spacetrackclient.SpaceTrackClient.tle_query">
+<code class="descname">tle_query</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/spacetracktool/spacetrackclient.html#SpaceTrackClient.tle_query"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spacetracktool.spacetrackclient.SpaceTrackClient.tle_query" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initiates a TLE query request.</p>
+<p>Any number of keyword arguments that are defined by the space-track.org
+API may be provided. Single value arguments are easy and should be
+passed a string or an object that can be coerced to a string:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span> <span class="kn">import</span> <span class="nn">spacetracktool</span> <span class="k">as</span> <span class="nn">st</span>
+<span class="o">&gt;&gt;</span> <span class="n">query</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">SpaceTrackClient</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="s1">&#39;password&#39;</span><span class="p">)</span>
+<span class="o">&gt;&gt;</span> <span class="n">result</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">tle_query</span><span class="p">(</span><span class="n">norad_cat_id</span><span class="o">=</span><span class="mi">12345</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Range arugment strings should be built with the
+spacetracktool.operations.make_range_string method. For example, to
+provide a date range to the <cite>epoch</cite> argument:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span> <span class="kn">import</span> <span class="nn">spacetracktool</span> <span class="k">as</span> <span class="nn">st</span>
+<span class="o">&gt;&gt;</span> <span class="kn">from</span> <span class="nn">spacetracktool</span> <span class="k">import</span> <span class="n">operations</span> <span class="k">as</span> <span class="n">ops</span>
+<span class="o">&gt;&gt;</span> <span class="n">date_range</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">make_range_string</span><span class="p">(</span><span class="s1">&#39;2018-01-01&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-01-31&#39;</span><span class="p">)</span>
+<span class="o">&gt;&gt;</span> <span class="n">query</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">SpaceTrackClient</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="s1">&#39;password&#39;</span><span class="p">)</span>
+<span class="o">&gt;&gt;</span> <span class="n">result</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">tle_query</span><span class="p">(</span><span class="n">epoch</span><span class="o">=</span><span class="n">date_range</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>Keyword Args:</dt>
+<dd><p class="first">comment: str
+originator: str
+norad_cat_id: int or str</p>
+<blockquote>
+<div>The norad catalog ID of a satellite. Should be a single value.</div></blockquote>
+<dl class="docutils">
+<dt>object_name: str</dt>
+<dd>The name string associated with an object. Should be a single
+value.</dd>
+<dt>object_type: int or str</dt>
+<dd>The catalog object type. Should be a single value.</dd>
+</dl>
+<p>classification_type: str
+intldes: str
+epoch: str</p>
+<blockquote>
+<div><p>The epoch date or date range in which to search. May be a single
+value or a range. Dates should be specified in ether of the
+followingthe formats:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;YYYY-MM-DD HH:mm:ss&#39;</span>
+<span class="s1">&#39;YYYY-MM-DD&#39;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>epoch_microseconds: str
+mean_motion: float or str</p>
+<blockquote>
+<div>The mean motion to search in revolutions per day. May be a
+single value or a range.</div></blockquote>
+<dl class="docutils">
+<dt>eccentricity: float or str</dt>
+<dd>The eccentricity to search. May be a single value or a range.</dd>
+<dt>inclination: float or str</dt>
+<dd>The inclination to search in degrees. May be a single value or
+a range.</dd>
+<dt>ra_of_asc_node: float or str</dt>
+<dd>The right-ascension of the ascending node to search in degrees.
+May be a single value or a range.</dd>
+<dt>arg_of_pericenter: float or str</dt>
+<dd>The argument of the pericenter to search. May be a single value
+or a range.</dd>
+<dt>mean_anomaly: float or str</dt>
+<dd>The mean anomaly to search. May be a single value or a range.</dd>
+</dl>
+<p>ephemeris_type: int or str
+element_set_no: int or str</p>
+<blockquote>
+<div>The element set number to search. Should be a single value.</div></blockquote>
+<dl class="docutils">
+<dt>rev_at_epoch: float or str</dt>
+<dd>The revolution at epoch to search. May be a single value or a
+range.</dd>
+<dt>bstar: float or str</dt>
+<dd>The b-star drag coefficient to search. May be a single value
+or a range.</dd>
+<dt>mean_motion_dot: float or str</dt>
+<dd>The first derivative of the mean motion with respect to time.
+May be a single value or a range.</dd>
+<dt>mean_motion_ddot: float or str</dt>
+<dd>The second derivative of the mean motion with respect to time.
+May be a single value or a range.</dd>
+</dl>
+<p>file: int or str
+tle_line0: str
+tle_line1: str
+tle_line2: str
+object_id: str
+object_number: int or str
+semimajor_axis: float or str</p>
+<blockquote>
+<div>The semimajor axis in Earth radii. May be a single value or a
+range.</div></blockquote>
+<dl class="last docutils">
+<dt>period: float or str</dt>
+<dd>The orbital period in days. May be single value or a range.</dd>
+<dt>apogee: float or str</dt>
+<dd>The radius when furthest from the Earth. May be a single value
+or a range.</dd>
+<dt>perigee: float or str</dt>
+<dd>The radius when furthest from the Earth. May be a single value
+or a range.</dd>
+</dl>
+</dd>
+<dt>Returns:</dt>
+<dd>The result of the query to space-track.org</dd>
+<dt>Raises:</dt>
+<dd>IndexError: if no keyword arguments are provided
+KeyError: if any provided key is not in the expected argument list</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-spacetracktool">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-spacetracktool" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">spacetracktool package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-spacetracktool.operations">spacetracktool.operations module</a></li>
+<li><a class="reference internal" href="#module-spacetracktool.spacetrackclient">spacetracktool.spacetrackclient module</a></li>
+<li><a class="reference internal" href="#module-spacetracktool">Module contents</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/spacetracktool.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Engineero.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/spacetracktool.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
