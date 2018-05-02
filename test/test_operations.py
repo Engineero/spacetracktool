@@ -1,5 +1,5 @@
 import unittest
-from ..spacetracktool import spacetracktool as st
+from .. import spacetracktool as st
 from ..spacetracktool import operations as ops
 
 

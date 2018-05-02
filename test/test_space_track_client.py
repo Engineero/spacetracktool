@@ -1,6 +1,6 @@
 import unittest
 import requests
-from ..spacetracktool import spacetracktool as st
+from .. import spacetracktool as st
 
 
 class TestSpaceTrackClient(unittest.TestCase):

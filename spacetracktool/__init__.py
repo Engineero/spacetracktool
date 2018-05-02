@@ -1,1 +1,1 @@
-from .spacetracktool import SpaceTrackClient
+from .spacetrackclient import SpaceTrackClient
