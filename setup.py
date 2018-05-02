@@ -3,13 +3,15 @@
 import os
 from setuptools import setup, find_packages
 
-def read(fname):
-    return open(os.path.join(os.path.dirname(__file__), fname)).read()
+#def read(fname):
+#    return open(os.path.join(os.path.dirname(__file__), fname)).read()
+with open ('README.rst', 'r') as readme_file:
+    README = readme_file.read()
 
 NAME = 'spacetracktool'
 VERSION = '0.1.0b4'
 DESCRIPTION = 'A Python API for querying space-track.org'
-LONG_DESCRIPTION = read('README.rst')
+LONG_DESCRIPTION = README
 LONG_DESCRIPTION_CONTENT_TYPE = 'text/x-rst'
 URL = 'https://github.com/Engineero/spacetracktool'
 AUTHOR = 'Engineero'
