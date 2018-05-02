@@ -2,12 +2,25 @@ SpaceTrackTool
 ==============
 .. highlight:: python
 
+Master branch
+------------------
+
+|travis| |coveralls|
+
+.. |travis| image:: https://travis-ci.org/Engineero/spacetracktool.svg?branch=master
+   :target: https://travis-ci.org/Engineero/spacetracktool
+.. |coveralls| image:: https://coveralls.io/repos/github/Engineero/spacetracktool/badge.svg?branch=master
+   :target: https://coveralls.io/github/Engineero/spacetracktool?branch=master
+
+Development branch
+------------------
+
 |travis| |coveralls|
 
 .. |travis| image:: https://travis-ci.org/Engineero/spacetracktool.svg?branch=develop
    :target: https://travis-ci.org/Engineero/spacetracktool
-.. |coveralls| image:: https://coveralls.io/repos/github/Engineero/spacetracktool/badge.svg?branch=master
-   :target: https://coveralls.io/github/Engineero/spacetracktool?branch=master
+.. |coveralls| image:: https://coveralls.io/repos/github/Engineero/spacetracktool/badge.svg?branch=develop
+   :target: https://coveralls.io/github/Engineero/spacetracktool?branch=develop
 
 
 A Python API for making queries to space-track.org_. To install::
