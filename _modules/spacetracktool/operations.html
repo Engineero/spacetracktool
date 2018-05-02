@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>spacetracktool.operations &#8212; spacetracktool 0.1.0b8 documentation</title>
+    <title>spacetracktool.operations &#8212; spacetracktool 0.1.0 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript" src="../../_static/documentation_options.js"></script>
@@ -34,79 +34,78 @@
 <span></span><span class="sd">&quot;&quot;&quot; Operations for use with the SpaceTrackClient.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="make_range_string"><a class="viewcode-back" href="../../spacetracktool.html#spacetracktool.operations.make_range_string">[docs]</a><span class="k">def</span> <span class="nf">make_range_string</span><span class="p">(</span><span class="n">start</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">end</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">equal</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot; Generates a string based on input range and mode.</span>
-<span class="sd">        </span>
-<span class="sd">        If `equal` is True, returns `start` or `end` (if `start` is None). If</span>
-<span class="sd">        `equal` is False, retruns `&#39;&gt;[start]&#39;` if only `start` is given,</span>
-<span class="sd">        returns `&#39;&lt;[end]&#39;` if only `end` is given, and returns</span>
-<span class="sd">        `&#39;[start]--[end]&#39;` if both are given. Note that no range checking is</span>
-<span class="sd">        performed on the input strings to ensure the result is a valid range.</span>
-<span class="sd">        </span>
-<span class="sd">        Kwargs:</span>
+<span class="c1"># pylint: disable=bad-whitespace</span>
+<div class="viewcode-block" id="make_range_string"><a class="viewcode-back" href="../../spacetracktool.html#spacetracktool.operations.make_range_string">[docs]</a><span class="k">def</span> <span class="nf">make_range_string</span><span class="p">(</span><span class="n">start</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">end</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                      <span class="n">equal</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot; Generates a string based on input range and mode.</span>
 
-<span class="sd">            start: str or value coercable to str.</span>
-<span class="sd">                The starting (lowest) value of the string. Default is None.</span>
+<span class="sd">    If `equal` is True, returns `start` or `end` (if `start` is None). If</span>
+<span class="sd">    `equal` is False, retruns `&#39;&gt;[start]&#39;` if only `start` is given, returns</span>
+<span class="sd">    `&#39;&lt;[end]&#39;` if only `end` is given, and returns `&#39;[start]--[end]&#39;` if both</span>
+<span class="sd">    are given. Note that no range checking is performed on the input strings to</span>
+<span class="sd">    ensure the result is a valid range.</span>
 
-<span class="sd">            end: str or value coercable to str.</span>
-<span class="sd">                The end (highest) value of the string. Default is None.</span>
+<span class="sd">    Kwargs:</span>
 
-<span class="sd">            equal: if True, returns `start` if defined, otherwise `end`.  If</span>
-<span class="sd">                False, returns a range based on values of `start` and `end`.</span>
-<span class="sd">                Default is False.</span>
-<span class="sd">        </span>
-<span class="sd">        Returns:</span>
+<span class="sd">        start: str or value coercable to str.</span>
+<span class="sd">            The starting (lowest) value of the string. Default is None.</span>
 
-<span class="sd">            Resulting range string.</span>
-<span class="sd">        </span>
-<span class="sd">        Raises:</span>
+<span class="sd">        end: str or value coercable to str.</span>
+<span class="sd">            The end (highest) value of the string. Default is None.</span>
 
-<span class="sd">            ValueError: if neither `start` nor `end` is specified and `equal`</span>
-<span class="sd">                is `True`.</span>
+<span class="sd">        equal: if True, returns `start` if defined, otherwise `end`.  If False,</span>
+<span class="sd">            returns a range based on values of `start` and `end`.  Default is</span>
+<span class="sd">            False.</span>
 
-<span class="sd">            ValueError: if neither `start` nor `end` (or both) is specified and</span>
-<span class="sd">                `equal` is `False`.</span>
+<span class="sd">    Returns:</span>
 
-<span class="sd">            ValueError: if start or end cannot be coerced to string.</span>
+<span class="sd">        Resulting range string.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">    Raises:</span>
+
+<span class="sd">        ValueError: if neither `start` nor `end` is specified and `equal` is</span>
+<span class="sd">            `True`.</span>
+
+<span class="sd">        ValueError: if neither `start` nor `end` (or both) is specified and</span>
+<span class="sd">            `equal` is `False`.</span>
+
+<span class="sd">        ValueError: if start or end cannot be coerced to string.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">start</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">start</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">start</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">excep</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">excep</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;start must be a string or coercable to string!&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">end</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">end</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">end</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">end</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">excep</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">excep</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;end must be a string or coercable to string!&#39;</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">equal</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">start</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-                <span class="k">try</span><span class="p">:</span>
-                    <span class="n">start</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">start</span><span class="p">)</span>
-                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                    <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
-                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;start must be a string or coercable to&#39;</span><span class="p">,</span>
-                                     <span class="s1">&#39;string!&#39;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">end</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">end</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-                <span class="k">try</span><span class="p">:</span>
-                    <span class="n">end</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">end</span><span class="p">)</span>
-                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                    <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
-                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;end must be a string or coercable to&#39;</span><span class="p">,</span>
-                                     <span class="s1">&#39;string!&#39;</span><span class="p">)</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="k">if</span> <span class="n">equal</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">start</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">result</span> <span class="o">=</span> <span class="n">start</span>
-            <span class="k">elif</span> <span class="n">end</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">result</span> <span class="o">=</span> <span class="n">end</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Either &#39;start&#39; or &#39;end&#39; must be specified </span><span class="se">\</span>
-<span class="s2">                                  if &#39;equal&#39; is True.&quot;</span><span class="p">)</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">start</span>
+        <span class="k">elif</span> <span class="n">end</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">end</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">start</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">end</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">result</span> <span class="o">=</span> <span class="n">start</span> <span class="o">+</span> <span class="s1">&#39;--&#39;</span> <span class="o">+</span> <span class="n">end</span>
-            <span class="k">elif</span> <span class="n">start</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">end</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">result</span> <span class="o">=</span> <span class="s1">&#39;&gt;&#39;</span> <span class="o">+</span> <span class="n">start</span>
-            <span class="k">elif</span> <span class="n">start</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">end</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">result</span> <span class="o">=</span> <span class="s1">&#39;&lt;&#39;</span> <span class="o">+</span> <span class="n">end</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Either &#39;start&#39; or &#39;end&#39; or both must be </span><span class="se">\</span>
-<span class="s2">                                  specified if &#39;equal&#39; is False.&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">result</span></div>
-
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Either &#39;start&#39; or &#39;end&#39; must be specified </span><span class="se">\</span>
+<span class="s2">                              if &#39;equal&#39; is True.&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">start</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">end</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">start</span> <span class="o">+</span> <span class="s1">&#39;--&#39;</span> <span class="o">+</span> <span class="n">end</span>
+        <span class="k">elif</span> <span class="n">start</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">end</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="s1">&#39;&gt;&#39;</span> <span class="o">+</span> <span class="n">start</span>
+        <span class="k">elif</span> <span class="n">start</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">end</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="s1">&#39;&lt;&#39;</span> <span class="o">+</span> <span class="n">end</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Either &#39;start&#39; or &#39;end&#39; or both must be </span><span class="se">\</span>
+<span class="s2">                              specified if &#39;equal&#39; is False.&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span></div>
 </pre></div>
 
           </div>

@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>spacetracktool package &#8212; spacetracktool 0.1.0b8 documentation</title>
+    <title>spacetracktool package &#8212; spacetracktool 0.1.0 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" src="_static/documentation_options.js"></script>
@@ -51,10 +51,10 @@
 </table>
 <p>Generates a string based on input range and mode.</p>
 <p>If <cite>equal</cite> is True, returns <cite>start</cite> or <cite>end</cite> (if <cite>start</cite> is None). If
-<cite>equal</cite> is False, retruns <cite>‘&gt;[start]’</cite> if only <cite>start</cite> is given,
-returns <cite>‘&lt;[end]’</cite> if only <cite>end</cite> is given, and returns
-<cite>‘[start]–[end]’</cite> if both are given. Note that no range checking is
-performed on the input strings to ensure the result is a valid range.</p>
+<cite>equal</cite> is False, retruns <cite>‘&gt;[start]’</cite> if only <cite>start</cite> is given, returns
+<cite>‘&lt;[end]’</cite> if only <cite>end</cite> is given, and returns <cite>‘[start]–[end]’</cite> if both
+are given. Note that no range checking is performed on the input strings to
+ensure the result is a valid range.</p>
 <p>Kwargs:</p>
 <blockquote>
 <div><dl class="docutils">
@@ -62,9 +62,9 @@ performed on the input strings to ensure the result is a valid range.</p>
 <dd>The starting (lowest) value of the string. Default is None.</dd>
 <dt>end: str or value coercable to str.</dt>
 <dd>The end (highest) value of the string. Default is None.</dd>
-<dt>equal: if True, returns <cite>start</cite> if defined, otherwise <cite>end</cite>.  If</dt>
-<dd>False, returns a range based on values of <cite>start</cite> and <cite>end</cite>.
-Default is False.</dd>
+<dt>equal: if True, returns <cite>start</cite> if defined, otherwise <cite>end</cite>.  If False,</dt>
+<dd>returns a range based on values of <cite>start</cite> and <cite>end</cite>.  Default is
+False.</dd>
 </dl>
 </div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -75,8 +75,8 @@ Default is False.</dd>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
-<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – if neither <cite>start</cite> nor <cite>end</cite> is specified and <cite>equal</cite>
-is <cite>True</cite>.</li>
+<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – if neither <cite>start</cite> nor <cite>end</cite> is specified and <cite>equal</cite> is
+<cite>True</cite>.</li>
 <li><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – if neither <cite>start</cite> nor <cite>end</cite> (or both) is specified and
 <cite>equal</cite> is <cite>False</cite>.</li>
 <li><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – if start or end cannot be coerced to string.</li>
@@ -113,31 +113,29 @@ command).</p>
 </tr>
 </tbody>
 </table>
-<p>Kwargs:</p>
-<blockquote>
-<div><dl class="docutils">
+<dl class="docutils">
+<dt>Kwargs:</dt>
+<dd><dl class="first last docutils">
 <dt>fmt: string specifying format for returned message. Can be one of</dt>
 <dd>‘xml’, ‘json’, ‘html’, ‘csv’, ‘tle’, ‘3le’, ‘kvn’, or None.
 None is the same as ‘json’. Default is None.</dd>
 </dl>
-</div></blockquote>
-<p>Properties:</p>
-<blockquote>
-<div><dl class="docutils">
+</dd>
+<dt>Properties:</dt>
+<dd><dl class="first last docutils">
 <dt>result: the result string returned from space-track.org by the last-run</dt>
 <dd>submit command.</dd>
 </dl>
-</div></blockquote>
+</dd>
+</dl>
 <p>Examples:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span> <span class="kn">import</span> <span class="nn">spacetracktool</span> <span class="k">as</span> <span class="nn">st</span>
-<span class="o">&gt;&gt;</span> <span class="kn">import</span> <span class="nn">spacetracktool.operations</span> <span class="k">as</span> <span class="nn">ops</span>
+<span class="o">&gt;&gt;</span> <span class="kn">from</span> <span class="nn">spacetracktool</span> <span class="k">import</span> <span class="n">operations</span> <span class="k">as</span> <span class="n">ops</span>
 <span class="o">&gt;&gt;</span> <span class="n">client</span> <span class="o">=</span> <span class="n">SpaceTrackClient</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
-<span class="o">&gt;&gt;</span> <span class="n">client</span><span class="o">.</span><span class="n">tle_query</span><span class="p">(</span><span class="n">norad_cat_id</span><span class="o">=</span><span class="mi">12345</span><span class="p">)</span>
-<span class="o">&gt;&gt;</span> <span class="n">result</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">submit</span><span class="p">()</span>
+<span class="o">&gt;&gt;</span> <span class="n">result</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">tle_query</span><span class="p">(</span><span class="n">norad_cat_id</span><span class="o">=</span><span class="mi">12345</span><span class="p">)</span>
 
 <span class="o">&gt;&gt;</span> <span class="n">date_range</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">make_range_string</span><span class="p">(</span><span class="s1">&#39;2018-01-01&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-01-31&#39;</span><span class="p">)</span>
-<span class="o">&gt;&gt;</span> <span class="n">client</span><span class="o">.</span><span class="n">tle_query</span><span class="p">(</span><span class="n">epoch</span><span class="o">=</span><span class="n">date_range</span><span class="p">)</span>  <span class="c1"># throws out previous query!</span>
-<span class="o">&gt;&gt;</span> <span class="n">new_result</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">submit</span><span class="p">()</span>
+<span class="o">&gt;&gt;</span> <span class="n">result</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">tle_query</span><span class="p">(</span><span class="n">epoch</span><span class="o">=</span><span class="n">date_range</span><span class="p">)</span>  <span class="c1"># throws out previous query!</span>
 </pre></div>
 </div>
 <dl class="method">
@@ -164,7 +162,8 @@ None is the same as ‘json’. Default is None.</dd>
 <dl class="attribute">
 <dt id="spacetracktool.spacetrackclient.SpaceTrackClient.base">
 <code class="descname">base</code><a class="headerlink" href="#spacetracktool.spacetrackclient.SpaceTrackClient.base" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Returns URL base string.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="spacetracktool.spacetrackclient.SpaceTrackClient.box_score_query">
@@ -256,17 +255,20 @@ that the object has decayed.</p>
 <dl class="attribute">
 <dt id="spacetracktool.spacetrackclient.SpaceTrackClient.login_url">
 <code class="descname">login_url</code><a class="headerlink" href="#spacetracktool.spacetrackclient.SpaceTrackClient.login_url" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Returns login URL string.</p>
+</dd></dl>
 
 <dl class="attribute">
 <dt id="spacetracktool.spacetrackclient.SpaceTrackClient.logout_url">
 <code class="descname">logout_url</code><a class="headerlink" href="#spacetracktool.spacetrackclient.SpaceTrackClient.logout_url" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Returns logout URL string.</p>
+</dd></dl>
 
 <dl class="attribute">
 <dt id="spacetracktool.spacetrackclient.SpaceTrackClient.null">
 <code class="descname">null</code><a class="headerlink" href="#spacetracktool.spacetrackclient.SpaceTrackClient.null" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Returns space-track.org’s null string.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="spacetracktool.spacetrackclient.SpaceTrackClient.organization_query">
@@ -432,76 +434,65 @@ provide a date range to the <cite>epoch</cite> argument:</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name" colspan="2">Keyword Arguments:</th></tr>
 <tr class="field-odd field"><td>&#160;</td><td class="field-body"><ul class="first simple">
-<li><strong>ordinal</strong> – int or str</li>
-<li><strong>comment</strong> – str</li>
-<li><strong>originator</strong> – str</li>
-<li><strong>norad_cat_id</strong> – int or str
-The norad catalog ID of a satellite. Should be a single value.</li>
-<li><strong>object_name</strong> – str
-The name string associated with an object. Should be a single
+<li><strong>ordinal</strong> (<em>int</em><em>, </em><em>str</em>) – TODO</li>
+<li><strong>comment</strong> (<em>str</em>) – TODO</li>
+<li><strong>originator</strong> (<em>str</em>) – TODO</li>
+<li><strong>norad_cat_id</strong> (<em>int</em><em>, </em><em>str</em>) – The norad catalog ID of a satellite.
+Should be a single value.</li>
+<li><strong>object_name</strong> (<em>str</em>) – The name string associated with an object.
+Should be a single value.</li>
+<li><strong>object_type</strong> (<em>int</em><em>, </em><em>str</em>) – The catalog object type. Should be a single
 value.</li>
-<li><strong>object_type</strong> – int or str
-The catalog object type. Should be a single value.</li>
-<li><strong>classification_type</strong> – str</li>
-<li><strong>intldes</strong> – str</li>
-<li><strong>epoch</strong> – <p>str
-The epoch date or date range in which to search. May be a single
-value or a range. Dates should be specified in ether of the
-followingthe formats:</p>
+<li><strong>classification_type</strong> (<em>int</em><em>, </em><em>str</em>) – TODO</li>
+<li><strong>intldes</strong> (<em>int</em><em>, </em><em>str</em>) – </li>
+<li><strong>epoch</strong> (<em>str</em>) – <p>The epoch date or date range in which to search. May
+be a single value or a range. Dates should be specified in
+ether of the followingthe formats:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;YYYY-MM-DD HH:mm:ss&#39;</span>
 <span class="s1">&#39;YYYY-MM-DD&#39;</span>
 </pre></div>
 </div>
 </li>
-<li><strong>epoch_microseconds</strong> – str</li>
-<li><strong>mean_motion</strong> – float or str
-The mean motion to search in revolutions per day. May be a
+<li><strong>epoch_microseconds</strong> (<em>str</em>) – TODO</li>
+<li><strong>mean_motion</strong> (<em>float</em><em>, </em><em>str</em>) – The mean motion to search in revolutions
+per day. May be a single value or a range.</li>
+<li><strong>eccentricity</strong> (<em>float</em><em>, </em><em>str</em>) – The eccentricity to search. May be a
 single value or a range.</li>
-<li><strong>eccentricity</strong> – float or str
-The eccentricity to search. May be a single value or a range.</li>
-<li><strong>inclination</strong> – float or str
-The inclination to search in degrees. May be a single value or
-a range.</li>
-<li><strong>ra_of_asc_node</strong> – float or str
-The right-ascension of the ascending node to search in degrees.
-May be a single value or a range.</li>
-<li><strong>arg_of_pericenter</strong> – float or str
-The argument of the pericenter to search. May be a single value
-or a range.</li>
-<li><strong>mean_anomaly</strong> – float or str
-The mean anomaly to search. May be a single value or a range.</li>
-<li><strong>ephemeris_type</strong> – int or str</li>
-<li><strong>element_set_no</strong> – int or str
-The element set number to search. Should be a single value.</li>
-<li><strong>rev_at_epoch</strong> – float or str
-The revolution at epoch to search. May be a single value or a
-range.</li>
-<li><strong>bstar</strong> – float or str
-The b-star drag coefficient to search. May be a single value
-or a range.</li>
-<li><strong>mean_motion_dot</strong> – float or str
-The first derivative of the mean motion with respect to time.
-May be a single value or a range.</li>
-<li><strong>mean_motion_ddot</strong> – float or str
-The second derivative of the mean motion with respect to time.
-May be a single value or a range.</li>
-<li><strong>file</strong> – int or str</li>
-<li><strong>tle_line0</strong> – str</li>
-<li><strong>tle_line1</strong> – str</li>
-<li><strong>tle_line2</strong> – str</li>
-<li><strong>object_id</strong> – str</li>
-<li><strong>object_number</strong> – int or str</li>
-<li><strong>semimajor_axis</strong> – float or str
-The semimajor axis in Earth radii. May be a single value or a
-range.</li>
-<li><strong>period</strong> – float or str
-The orbital period in days. May be single value or a range.</li>
-<li><strong>apogee</strong> – float or str
-The radius when furthest from the Earth. May be a single value
-or a range.</li>
-<li><strong>perigee</strong> – float or str
-The radius when furthest from the Earth. May be a single value
-or a range.</li>
+<li><strong>inclination</strong> (<em>float</em><em>, </em><em>str</em>) – The inclination to search in degrees. May
+be a single value or a range.</li>
+<li><strong>ra_of_asc_node</strong> (<em>float</em><em>, </em><em>str</em>) – The right-ascension of the ascending
+node to search in degrees. May be a single value or a range.</li>
+<li><strong>arg_of_pericenter</strong> (<em>float</em><em>, </em><em>str</em>) – The argument of the pericenter to
+search. May be a single value or a range.</li>
+<li><strong>mean_anomaly</strong> (<em>float</em><em>, </em><em>str</em>) – The mean anomaly to search. May be a
+single value or a range.</li>
+<li><strong>ephemeris_type</strong> (<em>int</em><em>, </em><em>str</em>) – TODO</li>
+<li><strong>element_set_no</strong> (<em>int</em><em>, </em><em>str</em>) – The element set number to search. Should
+be a single value.</li>
+<li><strong>rev_at_epoch</strong> (<em>float</em><em>, </em><em>str</em>) – The revolution at epoch to search. May
+be a single value or a range.</li>
+<li><strong>bstar</strong> (<em>float</em><em>, </em><em>str</em>) – The b-star drag coefficient to search. May be a
+single value or a range.</li>
+<li><strong>mean_motion_dot</strong> (<em>float</em><em>, </em><em>str</em>) – The first derivative of the mean
+motion with respect to time. May be a single value or a range.</li>
+<li><strong>mean_motion_ddot</strong> (<em>float</em><em>, </em><em>str</em>) – The second derivative of the mean
+motion with respect to time. May be a single value or a range.</li>
+<li><strong>file</strong> (<em>int</em><em>, </em><em>str</em>) – TODO</li>
+<li><strong>tle_line0</strong> (<em>str</em>) – The first line of a three-line element set.</li>
+<li><strong>tle_line1</strong> (<em>str</em>) – The second line of a three-line element set or
+first line of a two-line element set.</li>
+<li><strong>tle_line2</strong> (<em>str</em>) – The third line of a three-line element set or
+second line of a two-line element set.</li>
+<li><strong>object_id</strong> (<em>str</em>) – TODO</li>
+<li><strong>object_number</strong> (<em>int</em><em>, </em><em>str</em>) – TODO</li>
+<li><strong>semimajor_axis</strong> (<em>float</em><em>, </em><em>str</em>) – The semimajor axis in Earth radii. May
+be a single value or a range.</li>
+<li><strong>period</strong> (<em>float</em><em>, </em><em>str</em>) – The orbital period in days. May be single
+value or a range.</li>
+<li><strong>apogee</strong> (<em>float</em><em>, </em><em>str</em>) – The radius when furthest from the Earth. May
+be a single value or a range.</li>
+<li><strong>perigee</strong> (<em>float</em><em>, </em><em>str</em>) – The radius when furthest from the Earth. May
+be a single value or a range.</li>
 </ul>
 </td>
 </tr>
@@ -567,75 +558,64 @@ provide a date range to the <cite>epoch</cite> argument:</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name" colspan="2">Keyword Arguments:</th></tr>
 <tr class="field-odd field"><td>&#160;</td><td class="field-body"><ul class="first simple">
-<li><strong>comment</strong> – str</li>
-<li><strong>originator</strong> – str</li>
-<li><strong>norad_cat_id</strong> – int or str
-The norad catalog ID of a satellite. Should be a single value.</li>
-<li><strong>object_name</strong> – str
-The name string associated with an object. Should be a single
+<li><strong>comment</strong> (<em>str</em>) – TODO</li>
+<li><strong>originator</strong> (<em>str</em>) – TODO</li>
+<li><strong>norad_cat_id</strong> (<em>int</em><em>, </em><em>str</em>) – The norad catalog ID of a satellite.
+Should be a single value.</li>
+<li><strong>object_name</strong> (<em>str</em>) – The name string associated with an object.
+Should be a single value.</li>
+<li><strong>object_type</strong> (<em>int</em><em>, </em><em>str</em>) – The catalog object type. Should be a single
 value.</li>
-<li><strong>object_type</strong> – int or str
-The catalog object type. Should be a single value.</li>
-<li><strong>classification_type</strong> – str</li>
-<li><strong>intldes</strong> – str</li>
-<li><strong>epoch</strong> – <p>str
-The epoch date or date range in which to search. May be a single
-value or a range. Dates should be specified in ether of the
-followingthe formats:</p>
+<li><strong>classification_type</strong> (<em>int</em><em>, </em><em>str</em>) – TODO</li>
+<li><strong>intldes</strong> (<em>int</em><em>, </em><em>str</em>) – </li>
+<li><strong>epoch</strong> (<em>str</em>) – <p>The epoch date or date range in which to search. May
+be a single value or a range. Dates should be specified in
+ether of the followingthe formats:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;YYYY-MM-DD HH:mm:ss&#39;</span>
 <span class="s1">&#39;YYYY-MM-DD&#39;</span>
 </pre></div>
 </div>
 </li>
-<li><strong>epoch_microseconds</strong> – str</li>
-<li><strong>mean_motion</strong> – float or str
-The mean motion to search in revolutions per day. May be a
+<li><strong>epoch_microseconds</strong> (<em>str</em>) – TODO</li>
+<li><strong>mean_motion</strong> (<em>float</em><em>, </em><em>str</em>) – The mean motion to search in revolutions
+per day. May be a single value or a range.</li>
+<li><strong>eccentricity</strong> (<em>float</em><em>, </em><em>str</em>) – The eccentricity to search. May be a
 single value or a range.</li>
-<li><strong>eccentricity</strong> – float or str
-The eccentricity to search. May be a single value or a range.</li>
-<li><strong>inclination</strong> – float or str
-The inclination to search in degrees. May be a single value or
-a range.</li>
-<li><strong>ra_of_asc_node</strong> – float or str
-The right-ascension of the ascending node to search in degrees.
-May be a single value or a range.</li>
-<li><strong>arg_of_pericenter</strong> – float or str
-The argument of the pericenter to search. May be a single value
-or a range.</li>
-<li><strong>mean_anomaly</strong> – float or str
-The mean anomaly to search. May be a single value or a range.</li>
-<li><strong>ephemeris_type</strong> – int or str</li>
-<li><strong>element_set_no</strong> – int or str
-The element set number to search. Should be a single value.</li>
-<li><strong>rev_at_epoch</strong> – float or str
-The revolution at epoch to search. May be a single value or a
-range.</li>
-<li><strong>bstar</strong> – float or str
-The b-star drag coefficient to search. May be a single value
-or a range.</li>
-<li><strong>mean_motion_dot</strong> – float or str
-The first derivative of the mean motion with respect to time.
-May be a single value or a range.</li>
-<li><strong>mean_motion_ddot</strong> – float or str
-The second derivative of the mean motion with respect to time.
-May be a single value or a range.</li>
-<li><strong>file</strong> – int or str</li>
-<li><strong>tle_line0</strong> – str</li>
-<li><strong>tle_line1</strong> – str</li>
-<li><strong>tle_line2</strong> – str</li>
-<li><strong>object_id</strong> – str</li>
-<li><strong>object_number</strong> – int or str</li>
-<li><strong>semimajor_axis</strong> – float or str
-The semimajor axis in Earth radii. May be a single value or a
-range.</li>
-<li><strong>period</strong> – float or str
-The orbital period in days. May be single value or a range.</li>
-<li><strong>apogee</strong> – float or str
-The radius when furthest from the Earth. May be a single value
-or a range.</li>
-<li><strong>perigee</strong> – float or str
-The radius when furthest from the Earth. May be a single value
-or a range.</li>
+<li><strong>inclination</strong> (<em>float</em><em>, </em><em>str</em>) – The inclination to search in degrees. May
+be a single value or a range.</li>
+<li><strong>ra_of_asc_node</strong> (<em>float</em><em>, </em><em>str</em>) – The right-ascension of the ascending
+node to search in degrees. May be a single value or a range.</li>
+<li><strong>arg_of_pericenter</strong> (<em>float</em><em>, </em><em>str</em>) – The argument of the pericenter to
+search. May be a single value or a range.</li>
+<li><strong>mean_anomaly</strong> (<em>float</em><em>, </em><em>str</em>) – The mean anomaly to search. May be a
+single value or a range.</li>
+<li><strong>ephemeris_type</strong> (<em>int</em><em>, </em><em>str</em>) – TODO</li>
+<li><strong>element_set_no</strong> (<em>int</em><em>, </em><em>str</em>) – The element set number to search. Should
+be a single value.</li>
+<li><strong>rev_at_epoch</strong> (<em>float</em><em>, </em><em>str</em>) – The revolution at epoch to search. May
+be a single value or a range.</li>
+<li><strong>bstar</strong> (<em>float</em><em>, </em><em>str</em>) – The b-star drag coefficient to search. May be a
+single value or a range.</li>
+<li><strong>mean_motion_dot</strong> (<em>float</em><em>, </em><em>str</em>) – The first derivative of the mean
+motion with respect to time. May be a single value or a range.</li>
+<li><strong>mean_motion_ddot</strong> (<em>float</em><em>, </em><em>str</em>) – The second derivative of the mean
+motion with respect to time. May be a single value or a range.</li>
+<li><strong>file</strong> (<em>int</em><em>, </em><em>str</em>) – TODO</li>
+<li><strong>tle_line0</strong> (<em>str</em>) – The first line of a three-line element set.</li>
+<li><strong>tle_line1</strong> (<em>str</em>) – The second line of a three-line element set or
+first line of a two-line element set.</li>
+<li><strong>tle_line2</strong> (<em>str</em>) – The third line of a three-line element set or
+second line of a two-line element set.</li>
+<li><strong>object_id</strong> (<em>str</em>) – TODO</li>
+<li><strong>object_number</strong> (<em>int</em><em>, </em><em>str</em>) – TODO</li>
+<li><strong>semimajor_axis</strong> (<em>float</em><em>, </em><em>str</em>) – The semimajor axis in Earth radii. May
+be a single value or a range.</li>
+<li><strong>period</strong> (<em>float</em><em>, </em><em>str</em>) – The orbital period in days. May be single
+value or a range.</li>
+<li><strong>apogee</strong> (<em>float</em><em>, </em><em>str</em>) – The radius when furthest from the Earth. May
+be a single value or a range.</li>
+<li><strong>perigee</strong> (<em>float</em><em>, </em><em>str</em>) – The radius when furthest from the Earth. May
+be a single value or a range.</li>
 </ul>
 </td>
 </tr>
@@ -657,6 +637,18 @@ or a range.</li>
 </div>
 <div class="section" id="module-spacetracktool">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-spacetracktool" title="Permalink to this headline">¶</a></h2>
+<p>Module for making queries to space-track.org.</p>
+<p>The main entry point of the module is the SpaceTrackClient class. To start,
+create an instance of the SpaceTrackClient passing your username and password
+for space-track.org. You can sign up for a free account at space-track.org.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">spacetracktool</span> <span class="k">as</span> <span class="nn">st</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">SpaceTrackClient</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="s1">&#39;password&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Any query class defined in the space-track.org API is implemented as a method
+of this client, but not all classes have been tested as of yet. If you find
+problems, please open an issue on the project’s GitHub page or submit a pull
+request.</p>
 </div>
 </div>
 
