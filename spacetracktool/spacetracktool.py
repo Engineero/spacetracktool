@@ -132,6 +132,7 @@ class SpaceTrackClient():
         if not self.result.ok:
             print('Error posting request! Status code {}'.format(
                         self.result.status_code))
+            self.result.raise_for_status()  # raise HTTP error
         self._logout()
         return self.result
 

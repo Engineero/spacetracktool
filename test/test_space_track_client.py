@@ -1,4 +1,5 @@
 import unittest
+import requests
 from ..spacetracktool import spacetracktool as st
 
 
@@ -17,7 +18,10 @@ class TestSpaceTrackClient(unittest.TestCase):
                          'password did not initialize correctly!')
 
     def test_tle_query(self):
-        self.client.tle_query(norad_cat_id=12345)
+        with self.assertRaisesRegex(requests.exceptions.HTTPError,
+                                    '401 Client Error',
+                                    msg='Unexpected requests error raised!'):
+            self.client.tle_query(norad_cat_id=12345)
         self.assertEqual(self.client.print_query(),
                          'https://space-track.org/basicspacedata/query/class/tle/NORAD_CAT_ID/12345/format/json',
                          'tle_query did not update _query correctly!')
