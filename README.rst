@@ -27,16 +27,18 @@ A Python API for making queries to space-track.org_. To install::
     pip install spacetracktool
 
 To use, first get a username and password for space-track.org_, then create a
-query of the desired class. For example, to create a TLE query::
+query of the desired class. For example, to create a TLE query:
 
 .. code-block:: python
+
     import spacetracktool as st
     query = st.SpaceTrackClient('username', 'password')
     result = query.tle_query(norad_cat_id=12345)  # look for a specific satellite ID
 
-To create a slightly more complicated query, using ranges for some arguments::
+To create a slightly more complicated query, using ranges for some arguments:
 
 .. code-block:: python
+
     import spacetracktool as st
     from spacetracktool import operations as ops
     query = st.SpaceTrackClient('username', 'password')
