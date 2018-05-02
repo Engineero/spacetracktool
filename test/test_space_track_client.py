@@ -18,6 +18,12 @@ class TestSpaceTrackClient(unittest.TestCase):
                          'password did not initialize correctly!')
 
     def test_tle_query(self):
+        with self.assertRaisesRegex(IndexError, 'at least one keyword',
+                                    msg='IndexError not raised by tle_query!'):
+            self.client.tle_query()
+        with self.assertRaisesRegex(KeyError, 'Unexpected argument',
+                                    msg='KeyError not raised by tle_query!'):
+            self.client.tle_query(not_a_kwarg=True)
         with self.assertRaisesRegex(requests.exceptions.HTTPError,
                                     '401 Client Error',
                                     msg='Unexpected requests error raised!'):
@@ -29,51 +35,135 @@ class TestSpaceTrackClient(unittest.TestCase):
                          'tle_query did not update _query correctly!')
 
     def test_tle_latest_query(self):
-        with self.assertRaisesRegex(NotImplementedError, 'under construction',
-                                    msg='tle_latest_query did not say under construction!'):
+        with self.assertRaisesRegex(IndexError, 'at least one keyword',
+                                    msg='IndexError not raised by tle_latest_query!'):
             self.client.tle_latest_query()
+        with self.assertRaisesRegex(KeyError, 'Unexpected argument',
+                                    msg='KeyError not raised by tle_latest_query!'):
+            self.client.tle_latest_query(not_a_kwarg=True)
+        with self.assertRaisesRegex(requests.exceptions.HTTPError,
+                                    '401 Client Error',
+                                    msg='Unexpected requests error raised!'):
+            self.client.tle_latest_query(norad_cat_id=12345)
+
+    def test_tle_publish_query(self):
+        with self.assertRaisesRegex(IndexError, 'at least one keyword',
+                                    msg='IndexError not raised by tle_publish_query!'):
+            self.client.tle_publish_query()
+        with self.assertRaisesRegex(KeyError, 'Unexpected argument',
+                                    msg='KeyError not raised by tle_publish_query!'):
+            self.client.tle_publish_query(not_a_kwarg=True)
+        with self.assertRaisesRegex(requests.exceptions.HTTPError,
+                                    '401 Client Error',
+                                    msg='Unexpected requests error raised!'):
+            self.client.tle_publish_query(publish_epoch='2018-01-01')
 
     def test_box_score_query(self):
-        with self.assertRaisesRegex(NotImplementedError, 'under construction',
-                                    msg='box_score_query did not say under construction!'):
+        with self.assertRaisesRegex(IndexError, 'at least one keyword',
+                                    msg='IndexError not raised by box_score_query!'):
             self.client.box_score_query()
+        with self.assertRaisesRegex(KeyError, 'Unexpected argument',
+                                    msg='KeyError not raised by box_score_query!'):
+            self.client.box_score_query(not_a_kwarg=True)
+        with self.assertRaisesRegex(requests.exceptions.HTTPError,
+                                    '401 Client Error',
+                                    msg='Unexpected requests error raised!'):
+            self.client.box_score_query(country='usa')
 
     def test_satcat_query(self):
-        with self.assertRaisesRegex(NotImplementedError, 'under construction',
-                                    msg='satcat_query did not say under construction!'):
+        with self.assertRaisesRegex(IndexError, 'at least one keyword',
+                                    msg='IndexError not raised by satcat_query!'):
             self.client.satcat_query()
+        with self.assertRaisesRegex(KeyError, 'Unexpected argument',
+                                    msg='KeyError not raised by satcat_query!'):
+            self.client.satcat_query(not_a_kwarg=True)
+        with self.assertRaisesRegex(requests.exceptions.HTTPError,
+                                    '401 Client Error',
+                                    msg='Unexpected requests error raised!'):
+            self.client.satcat_query(norad_cat_id=12345)
 
     def test_launch_site_query(self):
-        with self.assertRaisesRegex(NotImplementedError, 'under construction',
-                                    msg='launch_site_query did not say under construction!'):
+        with self.assertRaisesRegex(IndexError, 'at least one keyword',
+                                    msg='IndexError not raised by launch_site_query!'):
             self.client.launch_site_query()
+        with self.assertRaisesRegex(KeyError, 'Unexpected argument',
+                                    msg='KeyError not raised by launch_site_query!'):
+            self.client.launch_site_query(not_a_kwarg=True)
+        with self.assertRaisesRegex(requests.exceptions.HTTPError,
+                                    '401 Client Error',
+                                    msg='Unexpected requests error raised!'):
+            self.client.launch_site_query(launch_site='FL')
 
     def test_satcat_change_query(self):
-        with self.assertRaisesRegex(NotImplementedError, 'under construction',
-                                    msg='satcat_change_query did not say under construction!'):
+        with self.assertRaisesRegex(IndexError, 'at least one keyword',
+                                    msg='IndexError not raised by satcat_change_query!'):
             self.client.satcat_change_query()
+        with self.assertRaisesRegex(KeyError, 'Unexpected argument',
+                                    msg='KeyError not raised by satcat_change_query!'):
+            self.client.satcat_change_query(not_a_kwarg=True)
+        with self.assertRaisesRegex(requests.exceptions.HTTPError,
+                                    '401 Client Error',
+                                    msg='Unexpected requests error raised!'):
+            self.client.satcat_change_query(norad_cat_id=12345)
 
     def test_satcat_debut_query(self):
-        with self.assertRaisesRegex(NotImplementedError, 'under construction',
-                                    msg='satcat_debut_query did not say under construction!'):
+        with self.assertRaisesRegex(IndexError, 'at least one keyword',
+                                    msg='IndexError not raised by satcat_debut_query!'):
             self.client.satcat_debut_query()
+        with self.assertRaisesRegex(KeyError, 'Unexpected argument',
+                                    msg='KeyError not raised by satcat_debut_query!'):
+            self.client.satcat_debut_query(not_a_kwarg=True)
+        with self.assertRaisesRegex(requests.exceptions.HTTPError,
+                                    '401 Client Error',
+                                    msg='Unexpected requests error raised!'):
+            self.client.satcat_debut_query(norad_cat_id=12345)
 
     def test_decay_query(self):
-        with self.assertRaisesRegex(NotImplementedError, 'under construction',
-                                    msg='decay_query did not say under construction!'):
+        with self.assertRaisesRegex(IndexError, 'at least one keyword',
+                                    msg='IndexError not raised by decay_query!'):
             self.client.decay_query()
+        with self.assertRaisesRegex(KeyError, 'Unexpected argument',
+                                    msg='KeyError not raised by decay_query!'):
+            self.client.decay_query(not_a_kwarg=True)
+        with self.assertRaisesRegex(requests.exceptions.HTTPError,
+                                    '401 Client Error',
+                                    msg='Unexpected requests error raised!'):
+            self.client.decay_query(norad_cat_id=12345)
+
+    def test_tip_query(self):
+        with self.assertRaisesRegex(IndexError, 'at least one keyword',
+                                    msg='IndexError not raised by tip_query!'):
+            self.client.tip_query()
+        with self.assertRaisesRegex(KeyError, 'Unexpected argument',
+                                    msg='KeyError not raised by tip_query!'):
+            self.client.tip_query(not_a_kwarg=True)
+        with self.assertRaisesRegex(requests.exceptions.HTTPError,
+                                    '401 Client Error',
+                                    msg='Unexpected requests error raised!'):
+            self.client.tip_query(norad_cat_id=12345)
 
     def test_announcement_query(self):
-        with self.assertRaisesRegex(NotImplementedError, 'under construction',
-                                    msg='announcement_query did not say under construction!'):
+        with self.assertRaisesRegex(IndexError, 'at least one keyword',
+                                    msg='IndexError not raised by announcement_query!'):
             self.client.announcement_query()
+        with self.assertRaisesRegex(KeyError, 'Unexpected argument',
+                                    msg='KeyError not raised by announcement_query!'):
+            self.client.announcement_query(not_a_kwarg=True)
+        with self.assertRaisesRegex(requests.exceptions.HTTPError,
+                                    '401 Client Error',
+                                    msg='Unexpected requests error raised!'):
+            self.client.announcement_query(announcement_start='2018-01-01')
 
     def test_cdm_query(self):
-        with self.assertRaisesRegex(NotImplementedError, 'under construction',
-                                    msg='cdm_query did not say under construction!'):
-            self.client.cdm_query()
+        with self.assertRaisesRegex(IndexError, 'at least one keyword',
+                                    msg='IndexError not raised by tle_query!'):
+            with self.assertWarnsRegex(Warning, 'not supported',
+                                       msg='cdm_query did not raise expected warning!'):
+                self.client.cdm_query()
 
     def test_organization_query(self):
-        with self.assertRaisesRegex(NotImplementedError, 'under construction',
-                                    msg='organization_query did not say under construction!'):
-            self.client.organization_query()
+        with self.assertRaisesRegex(IndexError, 'at least one keyword',
+                                    msg='IndexError not raised by tle_query!'):
+            with self.assertWarnsRegex(Warning, 'not supported',
+                                       msg='organization_query did not raise expected warning!'):
+                self.client.organization_query()

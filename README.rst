@@ -49,4 +49,7 @@ The official documents for the `space-track.org API can be found here`__.
 
 __ https://www.space-track.org/documentation
 
+- Source: https://github.com/Engineero/spacetracktool
+- Issue Tracker: https://github.com/Engineero/spacetracktool/issues
+
 .. _space-track.org: https://www.space-track.org/auth/login
