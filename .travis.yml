@@ -10,7 +10,7 @@ install:
 # Command to run tests
 script:
   #- python -m unittest discover -t ..
-  - coverage run --source spacetracktool setup.py test
+  - coverage run setup.py test
 after_success:
   - coveralls
 #branches:
