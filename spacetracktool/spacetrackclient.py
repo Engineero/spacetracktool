@@ -9,42 +9,36 @@ command).
 """
 
 
-import requests
 import warnings
-from . import operations as ops
+import requests
 
 
-class SpaceTrackClient():
+# pylint: disable=unused-variable
+class SpaceTrackClient:
     """ Provides an API for making POST requests to space-track.org
-    
+
     Args:
-
         username: your space-track.org username.
-
         password: the associated password.
 
     Kwargs:
-
         fmt: string specifying format for returned message. Can be one of
             'xml', 'json', 'html', 'csv', 'tle', '3le', 'kvn', or None.
             None is the same as 'json'. Default is None.
 
     Properties:
-
         result: the result string returned from space-track.org by the last-run
             submit command.
 
     Examples::
-    
+
         >> import spacetracktool as st
-        >> import spacetracktool.operations as ops
+        >> from spacetracktool import operations as ops
         >> client = SpaceTrackClient(username, password)
-        >> client.tle_query(norad_cat_id=12345)
-        >> result = client.submit()
-    
+        >> result = client.tle_query(norad_cat_id=12345)
+
         >> date_range = ops.make_range_string('2018-01-01', '2018-01-31')
-        >> client.tle_query(epoch=date_range)  # throws out previous query!
-        >> new_result = client.submit()
+        >> result = client.tle_query(epoch=date_range)  # throws out previous query!
 
     """
     _base = 'https://space-track.org'  # base URL for requests
@@ -54,19 +48,20 @@ class SpaceTrackClient():
 
     def __init__(self, username: str, password: str, fmt: str=None):
         """ Initializes the API.
-        
+
         Raises:
             ValueError: if provided fmt is not one of the specified options.
 
         """
         valid_fmt = ['xml', 'json', 'html', 'csv', 'tle', '3le', 'kvn']
         if fmt is not None:
-            if fmt.lower() not in valid_fmt:
+            # pylint: disable=not-callable
+            self._fmt = fmt.lower()
+            if self._fmt not in valid_fmt:
                 raise ValueError("fmt must be one of 'xml', 'json', 'html', \
                                  'csv', 'tle', '3le', 'kvn', or None.")
         else:
-            fmt = 'json'
-        self._fmt = fmt.lower()
+            self._fmt = 'json'
         self.username = username
         self.password = password
         self._query = []  # placeholder for our query string
@@ -74,9 +69,8 @@ class SpaceTrackClient():
 
     def _logout(self) -> requests.models.Response:
         """ Logs out of the space-track.org session.
-        
-        Returns:
 
+        Returns:
             Response from space-track.org
 
         """
@@ -105,9 +99,8 @@ class SpaceTrackClient():
 
     def _compile_query(self) -> str:
         """ Compiles the query (list of strings) into a '/'-separated string.
-        
-        Returns:
 
+        Returns:
             The query string with each element separated by a forward-slash.
 
         """
@@ -117,7 +110,7 @@ class SpaceTrackClient():
 
     def print_query(self):
         """ Prints the query to the screen.
-        
+
         Note that at this stage the format string has not been applied to the
         query. This string gets applied at the very end prior to submitting the
         POST request.
@@ -129,9 +122,8 @@ class SpaceTrackClient():
 
     def submit(self) -> requests.models.Response:
         """ Submits the generated query to space-track.org.
-        
-        Returns:
 
+        Returns:
             Response from space-track.org
 
         """
@@ -141,22 +133,20 @@ class SpaceTrackClient():
         self.result = requests.post(self.login_url, data=payload)
         if not self.result.ok:
             print('Error posting request! Status code {}'.format(
-                        self.result.status_code))
+                self.result.status_code))
+            # pylint: disable=not-callable
             self.result.raise_for_status()  # raise HTTP error
         self._logout()
         return self.result
 
     def _value_query(self, key: str, value: str):
         """ Specifies a "value equals ___" query.
-        
+
         Args:
-
             key: the key to add to the query string
-
             value: the value to search for
 
         Raises:
-
             ValueError: if key or value are not of type string and cannot be
                 coerced into a string.
 
@@ -164,15 +154,15 @@ class SpaceTrackClient():
         if not isinstance(key, str):
             try:
                 key = str(key)
-            except Exception as e:
-                print(e)
+            except Exception as excep:
+                print(excep)
                 raise ValueError('key argument must be a string or',
                                  'coercable to string!')
         if not isinstance(value, str):
             try:
                 value = str(value)
-            except Exception as e:
-                print(e)
+            except Exception as excep:
+                print(excep)
                 raise ValueError('value argument must be a string or',
                                  'coercable to string!')
         self._query.extend([key, value])
@@ -188,6 +178,7 @@ class SpaceTrackClient():
             KeyError: if a key is given that is not in the key list
 
         """
+        # pylint: disable=not-callable
         for k in kwargs.keys():
             if k not in key_list:
                 err_msg = ('Unexpected argument {} given! '.format(k) +
@@ -195,12 +186,13 @@ class SpaceTrackClient():
                            'submit a pull request or open an issue on GitHub.')
                 raise KeyError(err_msg)
         for key in key_list:
+            # pylint: disable=not-callable
             if key in kwargs.keys():
                 self._value_query(key.upper(), kwargs.pop(key))
 
     def tle_query(self, **kwargs):
         """ Initiates a TLE query request.
-        
+
         Any number of keyword arguments that are defined by the space-track.org
         API may be provided. Single value arguments are easy and should be
         passed a string or an object that can be coerced to a string::
@@ -220,73 +212,63 @@ class SpaceTrackClient():
             >> result = query.tle_query(epoch=date_range)
 
         Keyword Args:
-            comment: str
-            originator: str
-            norad_cat_id: int or str
-                The norad catalog ID of a satellite. Should be a single value.
-            object_name: str
-                The name string associated with an object. Should be a single
+            comment (str): TODO
+            originator (str): TODO
+            norad_cat_id (int, str): The norad catalog ID of a satellite.
+                Should be a single value.
+            object_name (str): The name string associated with an object.
+                Should be a single value.
+            object_type (int, str): The catalog object type. Should be a single
                 value.
-            object_type: int or str
-                The catalog object type. Should be a single value.
-            classification_type: str
-            intldes: str
-            epoch: str
-                The epoch date or date range in which to search. May be a single
-                value or a range. Dates should be specified in ether of the
-                followingthe formats::
+            classification_type (int, str): TODO
+            intldes (int, str):
+            epoch (str): The epoch date or date range in which to search. May
+                be a single value or a range. Dates should be specified in
+                ether of the followingthe formats::
 
                     'YYYY-MM-DD HH:mm:ss'
                     'YYYY-MM-DD'
-            epoch_microseconds: str
-            mean_motion: float or str
-                The mean motion to search in revolutions per day. May be a
+
+            epoch_microseconds (str): TODO
+            mean_motion (float, str): The mean motion to search in revolutions
+                per day. May be a single value or a range.
+            eccentricity (float, str): The eccentricity to search. May be a
                 single value or a range.
-            eccentricity: float or str
-                The eccentricity to search. May be a single value or a range.
-            inclination: float or str
-                The inclination to search in degrees. May be a single value or
-                a range.
-            ra_of_asc_node: float or str
-                The right-ascension of the ascending node to search in degrees.
-                May be a single value or a range.
-            arg_of_pericenter: float or str
-                The argument of the pericenter to search. May be a single value
-                or a range.
-            mean_anomaly: float or str
-                The mean anomaly to search. May be a single value or a range.
-            ephemeris_type: int or str
-            element_set_no: int or str
-                The element set number to search. Should be a single value.
-            rev_at_epoch: float or str
-                The revolution at epoch to search. May be a single value or a
-                range.
-            bstar: float or str
-                The b-star drag coefficient to search. May be a single value
-                or a range.
-            mean_motion_dot: float or str
-                The first derivative of the mean motion with respect to time.
-                May be a single value or a range.
-            mean_motion_ddot: float or str
-                The second derivative of the mean motion with respect to time.
-                May be a single value or a range.
-            file: int or str
-            tle_line0: str
-            tle_line1: str
-            tle_line2: str
-            object_id: str
-            object_number: int or str
-            semimajor_axis: float or str
-                The semimajor axis in Earth radii. May be a single value or a
-                range.
-            period: float or str
-                The orbital period in days. May be single value or a range.
-            apogee: float or str
-                The radius when furthest from the Earth. May be a single value
-                or a range.
-            perigee: float or str
-                The radius when furthest from the Earth. May be a single value
-                or a range.
+            inclination (float, str): The inclination to search in degrees. May
+                be a single value or a range.
+            ra_of_asc_node (float, str): The right-ascension of the ascending
+                node to search in degrees. May be a single value or a range.
+            arg_of_pericenter (float, str): The argument of the pericenter to
+                search. May be a single value or a range.
+            mean_anomaly (float, str): The mean anomaly to search. May be a
+                single value or a range.
+            ephemeris_type (int, str): TODO
+            element_set_no (int, str): The element set number to search. Should
+                be a single value.
+            rev_at_epoch (float, str): The revolution at epoch to search. May
+                be a single value or a range.
+            bstar (float, str): The b-star drag coefficient to search. May be a
+                single value or a range.
+            mean_motion_dot (float, str): The first derivative of the mean
+                motion with respect to time. May be a single value or a range.
+            mean_motion_ddot (float, str): The second derivative of the mean
+                motion with respect to time. May be a single value or a range.
+            file (int, str): TODO
+            tle_line0 (str): The first line of a three-line element set.
+            tle_line1 (str): The second line of a three-line element set or
+                first line of a two-line element set.
+            tle_line2 (str): The third line of a three-line element set or
+                second line of a two-line element set.
+            object_id (str): TODO
+            object_number (int, str): TODO
+            semimajor_axis (float, str): The semimajor axis in Earth radii. May
+                be a single value or a range.
+            period (float, str): The orbital period in days. May be single
+                value or a range.
+            apogee (float, str): The radius when furthest from the Earth. May
+                be a single value or a range.
+            perigee (float, str): The radius when furthest from the Earth. May
+                be a single value or a range.
 
         Returns:
             The result of the query to space-track.org
@@ -294,7 +276,7 @@ class SpaceTrackClient():
         Raises:
             IndexError: if no keyword arguments are provided
             KeyError: if any provided key is not in the expected argument list
-        
+
         """
         if len(kwargs) == 0:
             raise IndexError('Must supply at least one keyword argument!')
@@ -314,7 +296,7 @@ class SpaceTrackClient():
 
     def tle_latest_query(self, **kwargs):
         """ Initiates a TLE_latest query request.
-        
+
         Any number of keyword arguments that are defined by the space-track.org
         API may be provided. Single value arguments are easy and should be
         passed a string or an object that can be coerced to a string::
@@ -334,74 +316,64 @@ class SpaceTrackClient():
             >> result = query.tle_latest_query(epoch=date_range)
 
         Keyword Args:
-            ordinal: int or str
-            comment: str
-            originator: str
-            norad_cat_id: int or str
-                The norad catalog ID of a satellite. Should be a single value.
-            object_name: str
-                The name string associated with an object. Should be a single
+            ordinal (int, str): TODO
+            comment (str): TODO
+            originator (str): TODO
+            norad_cat_id (int, str): The norad catalog ID of a satellite.
+                Should be a single value.
+            object_name (str): The name string associated with an object.
+                Should be a single value.
+            object_type (int, str): The catalog object type. Should be a single
                 value.
-            object_type: int or str
-                The catalog object type. Should be a single value.
-            classification_type: str
-            intldes: str
-            epoch: str
-                The epoch date or date range in which to search. May be a single
-                value or a range. Dates should be specified in ether of the
-                followingthe formats::
+            classification_type (int, str): TODO
+            intldes (int, str):
+            epoch (str): The epoch date or date range in which to search. May
+                be a single value or a range. Dates should be specified in
+                ether of the followingthe formats::
 
                     'YYYY-MM-DD HH:mm:ss'
                     'YYYY-MM-DD'
-            epoch_microseconds: str
-            mean_motion: float or str
-                The mean motion to search in revolutions per day. May be a
+
+            epoch_microseconds (str): TODO
+            mean_motion (float, str): The mean motion to search in revolutions
+                per day. May be a single value or a range.
+            eccentricity (float, str): The eccentricity to search. May be a
                 single value or a range.
-            eccentricity: float or str
-                The eccentricity to search. May be a single value or a range.
-            inclination: float or str
-                The inclination to search in degrees. May be a single value or
-                a range.
-            ra_of_asc_node: float or str
-                The right-ascension of the ascending node to search in degrees.
-                May be a single value or a range.
-            arg_of_pericenter: float or str
-                The argument of the pericenter to search. May be a single value
-                or a range.
-            mean_anomaly: float or str
-                The mean anomaly to search. May be a single value or a range.
-            ephemeris_type: int or str
-            element_set_no: int or str
-                The element set number to search. Should be a single value.
-            rev_at_epoch: float or str
-                The revolution at epoch to search. May be a single value or a
-                range.
-            bstar: float or str
-                The b-star drag coefficient to search. May be a single value
-                or a range.
-            mean_motion_dot: float or str
-                The first derivative of the mean motion with respect to time.
-                May be a single value or a range.
-            mean_motion_ddot: float or str
-                The second derivative of the mean motion with respect to time.
-                May be a single value or a range.
-            file: int or str
-            tle_line0: str
-            tle_line1: str
-            tle_line2: str
-            object_id: str
-            object_number: int or str
-            semimajor_axis: float or str
-                The semimajor axis in Earth radii. May be a single value or a
-                range.
-            period: float or str
-                The orbital period in days. May be single value or a range.
-            apogee: float or str
-                The radius when furthest from the Earth. May be a single value
-                or a range.
-            perigee: float or str
-                The radius when furthest from the Earth. May be a single value
-                or a range.
+            inclination (float, str): The inclination to search in degrees. May
+                be a single value or a range.
+            ra_of_asc_node (float, str): The right-ascension of the ascending
+                node to search in degrees. May be a single value or a range.
+            arg_of_pericenter (float, str): The argument of the pericenter to
+                search. May be a single value or a range.
+            mean_anomaly (float, str): The mean anomaly to search. May be a
+                single value or a range.
+            ephemeris_type (int, str): TODO
+            element_set_no (int, str): The element set number to search. Should
+                be a single value.
+            rev_at_epoch (float, str): The revolution at epoch to search. May
+                be a single value or a range.
+            bstar (float, str): The b-star drag coefficient to search. May be a
+                single value or a range.
+            mean_motion_dot (float, str): The first derivative of the mean
+                motion with respect to time. May be a single value or a range.
+            mean_motion_ddot (float, str): The second derivative of the mean
+                motion with respect to time. May be a single value or a range.
+            file (int, str): TODO
+            tle_line0 (str): The first line of a three-line element set.
+            tle_line1 (str): The second line of a three-line element set or
+                first line of a two-line element set.
+            tle_line2 (str): The third line of a three-line element set or
+                second line of a two-line element set.
+            object_id (str): TODO
+            object_number (int, str): TODO
+            semimajor_axis (float, str): The semimajor axis in Earth radii. May
+                be a single value or a range.
+            period (float, str): The orbital period in days. May be single
+                value or a range.
+            apogee (float, str): The radius when furthest from the Earth. May
+                be a single value or a range.
+            perigee (float, str): The radius when furthest from the Earth. May
+                be a single value or a range.
 
         Returns:
             The result of the query to space-track.org
@@ -409,7 +381,7 @@ class SpaceTrackClient():
         Raises:
             IndexError: if no keyword arguments are provided
             KeyError: if any provided key is not in the expected argument list
-        
+
         """
         if len(kwargs) == 0:
             raise IndexError('Must supply at least one keyword argument!')
@@ -436,7 +408,7 @@ class SpaceTrackClient():
         Raises:
             IndexError: if no keyword arguments are provided
             KeyError: if any provided key is not in the expected argument list
-        
+
         """
         if len(kwargs) == 0:
             raise IndexError('Must supply at least one keyword argument!')
@@ -455,7 +427,7 @@ class SpaceTrackClient():
         Raises:
             IndexError: if no keyword arguments are provided
             KeyError: if any provided key is not in the expected argument list
-        
+
         """
         if len(kwargs) == 0:
             raise IndexError('Must supply at least one keyword argument!')
@@ -479,7 +451,7 @@ class SpaceTrackClient():
         Raises:
             IndexError: if no keyword arguments are provided
             KeyError: if any provided key is not in the expected argument list
-        
+
         """
         if len(kwargs) == 0:
             raise IndexError('Must supply at least one keyword argument!')
@@ -503,7 +475,7 @@ class SpaceTrackClient():
         Raises:
             IndexError: if no keyword arguments are provided
             KeyError: if any provided key is not in the expected argument list
-        
+
         """
         if len(kwargs) == 0:
             raise IndexError('Must supply at least one keyword argument!')
@@ -522,7 +494,7 @@ class SpaceTrackClient():
         Raises:
             IndexError: if no keyword arguments are provided
             KeyError: if any provided key is not in the expected argument list
-        
+
         """
         if len(kwargs) == 0:
             raise IndexError('Must supply at least one keyword argument!')
@@ -545,7 +517,7 @@ class SpaceTrackClient():
         Raises:
             IndexError: if no keyword arguments are provided
             KeyError: if any provided key is not in the expected argument list
-        
+
         """
         if len(kwargs) == 0:
             raise IndexError('Must supply at least one keyword argument!')
@@ -572,14 +544,14 @@ class SpaceTrackClient():
         Raises:
             IndexError: if no keyword arguments are provided
             KeyError: if any provided key is not in the expected argument list
-        
+
         """
         if len(kwargs) == 0:
             raise IndexError('Must supply at least one keyword argument!')
         key_list = ['norad_cat_id', 'object_number', 'object_name', 'intldes',
                     'object_id', 'rcs', 'rcs_size', 'country', 'msg_epoch',
                     'decay_epoch', 'source', 'msg_type', 'precedence']
-        if 'precedence' not in kwargs.keys():
+        if 'precedence' not in list(kwargs.keys()):
             kwargs['precedence'] = 2  # default to decay announcements
         self._start_query()
         self._query.extend(['class', 'decay'])
@@ -595,7 +567,7 @@ class SpaceTrackClient():
         Raises:
             IndexError: if no keyword arguments are provided
             KeyError: if any provided key is not in the expected argument list
-        
+
         """
         if len(kwargs) == 0:
             raise IndexError('Must supply at least one keyword argument!')
@@ -616,7 +588,7 @@ class SpaceTrackClient():
         Raises:
             IndexError: if no keyword arguments are provided
             KeyError: if any provided key is not in the expected argument list
-        
+
         """
         if len(kwargs) == 0:
             raise IndexError('Must supply at least one keyword argument!')
@@ -636,7 +608,7 @@ class SpaceTrackClient():
         Raises:
             IndexError: if no keyword arguments are provided
             KeyError: if any provided key is not in the expected argument list
-        
+
         """
         warnings.warn('Expanded space data queries are not supported at this time.',
                       Warning)
@@ -779,7 +751,7 @@ class SpaceTrackClient():
         Raises:
             IndexError: if no keyword arguments are provided
             KeyError: if any provided key is not in the expected argument list
-        
+
         """
         warnings.warn('Expanded space data queries are not supported at this time.',
                       Warning)
@@ -795,16 +767,20 @@ class SpaceTrackClient():
 
     @property
     def base(self):
+        """ Returns URL base string. """
         return type(self)._base
 
     @property
     def login_url(self):
+        """ Returns login URL string. """
         return type(self)._login_url
 
     @property
     def logout_url(self):
+        """ Returns logout URL string. """
         return type(self)._logout_url
 
     @property
     def null(self):
+        """ Returns space-track.org's null string. """
         return type(self)._null

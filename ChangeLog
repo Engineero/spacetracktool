@@ -1,6 +1,14 @@
 CHANGES
 =======
 
+0.1.0
+-----
+
+* Fixed Google-style docs with Sphinx.
+* Hosted docs on GitHub.
+* Refactored to pass most pylint tests.
+* Improved API documentation.
+
 0.1.0b8
 -------
 

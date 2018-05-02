@@ -12,10 +12,10 @@ spacetracktool.operations module
     :undoc-members:
     :show-inheritance:
 
-spacetracktool.spacetracktool module
-------------------------------------
+spacetracktool.spacetrackclient module
+--------------------------------------
 
-.. automodule:: spacetracktool.spacetracktool
+.. automodule:: spacetracktool.spacetrackclient
     :members:
     :undoc-members:
     :show-inheritance:

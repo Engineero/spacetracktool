@@ -24,9 +24,9 @@ copyright = '2018, Engineero'
 author = 'Engineero'
 
 # The short X.Y version
-version = ''
+version = '0.1'
 # The full version, including alpha/beta/rc tags
-release = '0.1.0b2'
+release = '0.1.0'
 
 
 # -- General configuration ---------------------------------------------------
@@ -40,7 +40,7 @@ release = '0.1.0b2'
 # ones.
 extensions = [
     'sphinx.ext.autodoc',
-    #'sphinxcontrib.napoleon',
+    'sphinx.ext.napoleon',
     'sphinx_autodoc_napoleon_typehints',
     'sphinx.ext.mathjax',
     'sphinx.ext.viewcode',

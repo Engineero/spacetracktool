@@ -6,7 +6,7 @@ SPHINXOPTS    =
 SPHINXBUILD   = sphinx-build
 SPHINXPROJ    = spacetracktool
 SOURCEDIR     = source
-BUILDDIR      = build
+BUILDDIR      = ../../spacetracktool-docs
 
 # Put it first so that "make" without argument is like "make help".
 help:
