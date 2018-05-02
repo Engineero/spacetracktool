@@ -1,6 +1,16 @@
 CHANGES
 =======
 
+0.1.0b7
+-------
+
+* Fixed a change that somehow got undone in README. Hopefully this will fix the README on PyPI.
+
+0.1.0b6
+-------
+
+* May have finally fixed README.
+
 0.1.0b5
 -------
 
