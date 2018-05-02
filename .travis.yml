@@ -9,7 +9,8 @@ install:
   - pip install -r requirements.txt
 # Command to run tests
 script:
-  - python -m unittest discover -t ..
+  #- python -m unittest discover -t ..
+  - coverage run --source spacetracktool setup.py test
 after_success:
   - coveralls
 #branches:
