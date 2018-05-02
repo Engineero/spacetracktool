@@ -9,14 +9,14 @@ with open ('README.rst', 'r') as readme_file:
     README = readme_file.read()
 
 NAME = 'spacetracktool'
-VERSION = '0.1.0b8'
+VERSION = '0.1.0'
 DESCRIPTION = 'A Python API for querying space-track.org'
 LONG_DESCRIPTION_CONTENT_TYPE = 'text/x-rst'
 URL = 'https://github.com/Engineero/spacetracktool'
 AUTHOR = 'Engineero'
 AUTHOR_EMAIL = 'engineerolabs@gmail.com'
 LICENSE = 'MIT'
-CLASSIFIERS = ['Development Status :: 4 - Beta',
+CLASSIFIERS = ['Development Status :: 5 - Production/Stable',
                'Environment :: Console',
                'Intended Audience :: Developers',
                'Intended Audience :: Science/Research',
