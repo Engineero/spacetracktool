@@ -1,6 +1,12 @@
 CHANGES
 =======
 
+0.1.0b8
+-------
+
+* Implemented complete API coverage without any validity checking on inputs.
+* Expanded tests to improve coverage.
+
 0.1.0b7
 -------
 
