@@ -37,20 +37,22 @@ def make_range_string(start: str=None, end: str=None, equal: bool=False) -> str:
             ValueError: if start or end cannot be coerced to string.
 
         """
-        if not isinstance(start, str):
-            try:
-                start = str(start)
-            except Exception as e:
-                print(e)
-                raise ValueError('start must be a string or coercable to',
-                                 'string!')
-        if not isinstance(end, str):
-            try:
-                end = str(end)
-            except Exception as e:
-                print(e)
-                raise ValueError('end must be a string or coercable to',
-                                 'string!')
+        if start is not None:
+            if not isinstance(start, str):
+                try:
+                    start = str(start)
+                except Exception as e:
+                    print(e)
+                    raise ValueError('start must be a string or coercable to',
+                                     'string!')
+        if end is not None:
+            if not isinstance(end, str):
+                try:
+                    end = str(end)
+                except Exception as e:
+                    print(e)
+                    raise ValueError('end must be a string or coercable to',
+                                     'string!')
         result = None
         if equal:
             if start is not None:
