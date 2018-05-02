@@ -18,33 +18,27 @@ class SpaceTrackClient:
     """ Provides an API for making POST requests to space-track.org
 
     Args:
-
         username: your space-track.org username.
-
         password: the associated password.
 
     Kwargs:
-
         fmt: string specifying format for returned message. Can be one of
             'xml', 'json', 'html', 'csv', 'tle', '3le', 'kvn', or None.
             None is the same as 'json'. Default is None.
 
     Properties:
-
         result: the result string returned from space-track.org by the last-run
             submit command.
 
     Examples::
 
         >> import spacetracktool as st
-        >> import spacetracktool.operations as ops
+        >> from spacetracktool import operations as ops
         >> client = SpaceTrackClient(username, password)
-        >> client.tle_query(norad_cat_id=12345)
-        >> result = client.submit()
+        >> result = client.tle_query(norad_cat_id=12345)
 
         >> date_range = ops.make_range_string('2018-01-01', '2018-01-31')
-        >> client.tle_query(epoch=date_range)  # throws out previous query!
-        >> new_result = client.submit()
+        >> result = client.tle_query(epoch=date_range)  # throws out previous query!
 
     """
     _base = 'https://space-track.org'  # base URL for requests
@@ -77,7 +71,6 @@ class SpaceTrackClient:
         """ Logs out of the space-track.org session.
 
         Returns:
-
             Response from space-track.org
 
         """
@@ -108,7 +101,6 @@ class SpaceTrackClient:
         """ Compiles the query (list of strings) into a '/'-separated string.
 
         Returns:
-
             The query string with each element separated by a forward-slash.
 
         """
@@ -132,7 +124,6 @@ class SpaceTrackClient:
         """ Submits the generated query to space-track.org.
 
         Returns:
-
             Response from space-track.org
 
         """
@@ -152,13 +143,10 @@ class SpaceTrackClient:
         """ Specifies a "value equals ___" query.
 
         Args:
-
             key: the key to add to the query string
-
             value: the value to search for
 
         Raises:
-
             ValueError: if key or value are not of type string and cannot be
                 coerced into a string.
 
@@ -224,73 +212,63 @@ class SpaceTrackClient:
             >> result = query.tle_query(epoch=date_range)
 
         Keyword Args:
-            comment: str
-            originator: str
-            norad_cat_id: int or str
-                The norad catalog ID of a satellite. Should be a single value.
-            object_name: str
-                The name string associated with an object. Should be a single
+            comment (str): TODO
+            originator (str): TODO
+            norad_cat_id (int, str): The norad catalog ID of a satellite.
+                Should be a single value.
+            object_name (str): The name string associated with an object.
+                Should be a single value.
+            object_type (int, str): The catalog object type. Should be a single
                 value.
-            object_type: int or str
-                The catalog object type. Should be a single value.
-            classification_type: str
-            intldes: str
-            epoch: str
-                The epoch date or date range in which to search. May be a single
-                value or a range. Dates should be specified in ether of the
-                followingthe formats::
+            classification_type (int, str): TODO
+            intldes (int, str):
+            epoch (str): The epoch date or date range in which to search. May
+                be a single value or a range. Dates should be specified in
+                ether of the followingthe formats::
 
                     'YYYY-MM-DD HH:mm:ss'
                     'YYYY-MM-DD'
-            epoch_microseconds: str
-            mean_motion: float or str
-                The mean motion to search in revolutions per day. May be a
+
+            epoch_microseconds (str): TODO
+            mean_motion (float, str): The mean motion to search in revolutions
+                per day. May be a single value or a range.
+            eccentricity (float, str): The eccentricity to search. May be a
                 single value or a range.
-            eccentricity: float or str
-                The eccentricity to search. May be a single value or a range.
-            inclination: float or str
-                The inclination to search in degrees. May be a single value or
-                a range.
-            ra_of_asc_node: float or str
-                The right-ascension of the ascending node to search in degrees.
-                May be a single value or a range.
-            arg_of_pericenter: float or str
-                The argument of the pericenter to search. May be a single value
-                or a range.
-            mean_anomaly: float or str
-                The mean anomaly to search. May be a single value or a range.
-            ephemeris_type: int or str
-            element_set_no: int or str
-                The element set number to search. Should be a single value.
-            rev_at_epoch: float or str
-                The revolution at epoch to search. May be a single value or a
-                range.
-            bstar: float or str
-                The b-star drag coefficient to search. May be a single value
-                or a range.
-            mean_motion_dot: float or str
-                The first derivative of the mean motion with respect to time.
-                May be a single value or a range.
-            mean_motion_ddot: float or str
-                The second derivative of the mean motion with respect to time.
-                May be a single value or a range.
-            file: int or str
-            tle_line0: str
-            tle_line1: str
-            tle_line2: str
-            object_id: str
-            object_number: int or str
-            semimajor_axis: float or str
-                The semimajor axis in Earth radii. May be a single value or a
-                range.
-            period: float or str
-                The orbital period in days. May be single value or a range.
-            apogee: float or str
-                The radius when furthest from the Earth. May be a single value
-                or a range.
-            perigee: float or str
-                The radius when furthest from the Earth. May be a single value
-                or a range.
+            inclination (float, str): The inclination to search in degrees. May
+                be a single value or a range.
+            ra_of_asc_node (float, str): The right-ascension of the ascending
+                node to search in degrees. May be a single value or a range.
+            arg_of_pericenter (float, str): The argument of the pericenter to
+                search. May be a single value or a range.
+            mean_anomaly (float, str): The mean anomaly to search. May be a
+                single value or a range.
+            ephemeris_type (int, str): TODO
+            element_set_no (int, str): The element set number to search. Should
+                be a single value.
+            rev_at_epoch (float, str): The revolution at epoch to search. May
+                be a single value or a range.
+            bstar (float, str): The b-star drag coefficient to search. May be a
+                single value or a range.
+            mean_motion_dot (float, str): The first derivative of the mean
+                motion with respect to time. May be a single value or a range.
+            mean_motion_ddot (float, str): The second derivative of the mean
+                motion with respect to time. May be a single value or a range.
+            file (int, str): TODO
+            tle_line0 (str): The first line of a three-line element set.
+            tle_line1 (str): The second line of a three-line element set or
+                first line of a two-line element set.
+            tle_line2 (str): The third line of a three-line element set or
+                second line of a two-line element set.
+            object_id (str): TODO
+            object_number (int, str): TODO
+            semimajor_axis (float, str): The semimajor axis in Earth radii. May
+                be a single value or a range.
+            period (float, str): The orbital period in days. May be single
+                value or a range.
+            apogee (float, str): The radius when furthest from the Earth. May
+                be a single value or a range.
+            perigee (float, str): The radius when furthest from the Earth. May
+                be a single value or a range.
 
         Returns:
             The result of the query to space-track.org
@@ -338,74 +316,64 @@ class SpaceTrackClient:
             >> result = query.tle_latest_query(epoch=date_range)
 
         Keyword Args:
-            ordinal: int or str
-            comment: str
-            originator: str
-            norad_cat_id: int or str
-                The norad catalog ID of a satellite. Should be a single value.
-            object_name: str
-                The name string associated with an object. Should be a single
+            ordinal (int, str): TODO
+            comment (str): TODO
+            originator (str): TODO
+            norad_cat_id (int, str): The norad catalog ID of a satellite.
+                Should be a single value.
+            object_name (str): The name string associated with an object.
+                Should be a single value.
+            object_type (int, str): The catalog object type. Should be a single
                 value.
-            object_type: int or str
-                The catalog object type. Should be a single value.
-            classification_type: str
-            intldes: str
-            epoch: str
-                The epoch date or date range in which to search. May be a single
-                value or a range. Dates should be specified in ether of the
-                followingthe formats::
+            classification_type (int, str): TODO
+            intldes (int, str):
+            epoch (str): The epoch date or date range in which to search. May
+                be a single value or a range. Dates should be specified in
+                ether of the followingthe formats::
 
                     'YYYY-MM-DD HH:mm:ss'
                     'YYYY-MM-DD'
-            epoch_microseconds: str
-            mean_motion: float or str
-                The mean motion to search in revolutions per day. May be a
+
+            epoch_microseconds (str): TODO
+            mean_motion (float, str): The mean motion to search in revolutions
+                per day. May be a single value or a range.
+            eccentricity (float, str): The eccentricity to search. May be a
                 single value or a range.
-            eccentricity: float or str
-                The eccentricity to search. May be a single value or a range.
-            inclination: float or str
-                The inclination to search in degrees. May be a single value or
-                a range.
-            ra_of_asc_node: float or str
-                The right-ascension of the ascending node to search in degrees.
-                May be a single value or a range.
-            arg_of_pericenter: float or str
-                The argument of the pericenter to search. May be a single value
-                or a range.
-            mean_anomaly: float or str
-                The mean anomaly to search. May be a single value or a range.
-            ephemeris_type: int or str
-            element_set_no: int or str
-                The element set number to search. Should be a single value.
-            rev_at_epoch: float or str
-                The revolution at epoch to search. May be a single value or a
-                range.
-            bstar: float or str
-                The b-star drag coefficient to search. May be a single value
-                or a range.
-            mean_motion_dot: float or str
-                The first derivative of the mean motion with respect to time.
-                May be a single value or a range.
-            mean_motion_ddot: float or str
-                The second derivative of the mean motion with respect to time.
-                May be a single value or a range.
-            file: int or str
-            tle_line0: str
-            tle_line1: str
-            tle_line2: str
-            object_id: str
-            object_number: int or str
-            semimajor_axis: float or str
-                The semimajor axis in Earth radii. May be a single value or a
-                range.
-            period: float or str
-                The orbital period in days. May be single value or a range.
-            apogee: float or str
-                The radius when furthest from the Earth. May be a single value
-                or a range.
-            perigee: float or str
-                The radius when furthest from the Earth. May be a single value
-                or a range.
+            inclination (float, str): The inclination to search in degrees. May
+                be a single value or a range.
+            ra_of_asc_node (float, str): The right-ascension of the ascending
+                node to search in degrees. May be a single value or a range.
+            arg_of_pericenter (float, str): The argument of the pericenter to
+                search. May be a single value or a range.
+            mean_anomaly (float, str): The mean anomaly to search. May be a
+                single value or a range.
+            ephemeris_type (int, str): TODO
+            element_set_no (int, str): The element set number to search. Should
+                be a single value.
+            rev_at_epoch (float, str): The revolution at epoch to search. May
+                be a single value or a range.
+            bstar (float, str): The b-star drag coefficient to search. May be a
+                single value or a range.
+            mean_motion_dot (float, str): The first derivative of the mean
+                motion with respect to time. May be a single value or a range.
+            mean_motion_ddot (float, str): The second derivative of the mean
+                motion with respect to time. May be a single value or a range.
+            file (int, str): TODO
+            tle_line0 (str): The first line of a three-line element set.
+            tle_line1 (str): The second line of a three-line element set or
+                first line of a two-line element set.
+            tle_line2 (str): The third line of a three-line element set or
+                second line of a two-line element set.
+            object_id (str): TODO
+            object_number (int, str): TODO
+            semimajor_axis (float, str): The semimajor axis in Earth radii. May
+                be a single value or a range.
+            period (float, str): The orbital period in days. May be single
+                value or a range.
+            apogee (float, str): The radius when furthest from the Earth. May
+                be a single value or a range.
+            perigee (float, str): The radius when furthest from the Earth. May
+                be a single value or a range.
 
         Returns:
             The result of the query to space-track.org
