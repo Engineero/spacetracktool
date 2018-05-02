@@ -32,8 +32,7 @@ query of the desired class. For example, to create a TLE query::
 
     >> from spacetracktool import spacetracktool as st
     >> query = st.SpaceTrackClient('username', 'password')
-    >> query.tle_query(norad_cat_id=12345)  # look for a specific satellite ID
-    >> result = query.submit()  # submit to space-track.org and return the result
+    >> result = query.tle_query(norad_cat_id=12345)  # look for a specific satellite ID
 
 To create a slightly more complicated query, using ranges for some arguments::
 
@@ -41,8 +40,7 @@ To create a slightly more complicated query, using ranges for some arguments::
     >> from spacetracktool import operations as ops
     >> query = st.SpaceTrackClient('username', 'password')
     >> date_range = ops.make_range_string('2018-01-01', '2018-01-31')
-    >> query.tle_query(epoch=date_range)
-    >> result = query.submit()
+    >> result = query.tle_query(epoch=date_range)  # generates and submits query
 
 The official documents for the `space-track.org API can be found here`__.
 
