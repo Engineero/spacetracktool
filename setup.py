@@ -9,9 +9,8 @@ with open ('README.rst', 'r') as readme_file:
     README = readme_file.read()
 
 NAME = 'spacetracktool'
-VERSION = '0.1.0b4'
+VERSION = '0.1.0b5'
 DESCRIPTION = 'A Python API for querying space-track.org'
-LONG_DESCRIPTION = README
 LONG_DESCRIPTION_CONTENT_TYPE = 'text/x-rst'
 URL = 'https://github.com/Engineero/spacetracktool'
 AUTHOR = 'Engineero'
@@ -41,7 +40,7 @@ INSTALL_REQUIRES = ['requests']
 setup(name=NAME,
       version=VERSION,
       description=DESCRIPTION,
-      long_description=LONG_DESCRIPTION,
+      long_description=README,
       long_description_content_type=LONG_DESCRIPTION_CONTENT_TYPE,
       url=URL,
       author=AUTHOR,

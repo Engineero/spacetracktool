@@ -1,7 +1,22 @@
 CHANGES
 =======
 
-* Updated ChangeLog with setup.py
+0.1.0b5
+-------
+
+* Started manually filling out the change log, including back-filling some old versions.
+* May have fixed README text rendering for PyPI
+* Updated import behavior so that SpaceTrackClient comes in under `import spacetracktool`.
+
+0.1.0b4
+-------
+
+* Integrated Coveralls test coverage.
+
+0.1.0b3
+-------
+
+* Integrated Travis CI for builds.
 
 0.1.0b1
 -------
