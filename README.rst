@@ -25,7 +25,7 @@ Development branch
 
 A Python API for making queries to space-track.org_. To install::
 
-    $ pip install spacetracktool
+    \$ pip install spacetracktool
 
 To use, first get a username and password for space-track.org_, then create a
 query of the desired class. For example, to create a TLE query::
