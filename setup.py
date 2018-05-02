@@ -33,7 +33,9 @@ CLASSIFIERS = ['Development Status :: 4 - Beta',
                'Topic :: Scientific/Engineering :: Astronomy',
                'Topic :: Utilities']
 KEYWORDS = 'space spacetrack elset tle satellite astronomy'
-PROJECT_URLS = {'Source': 'https://github.com/Engineero/spacetracktool'}
+PROJECT_URLS = {'Documentation': 'https://engineero.github.io/spacetracktool/',
+                'Source': 'https://github.com/Engineero/spacetracktool',
+                'Tracker': 'https://github.com/Engineero/spacetracktool/issues'}
 PACKAGES = find_packages(exclude=['contrib', 'docs', 'tests*'])
 INSTALL_REQUIRES = ['requests']
 
