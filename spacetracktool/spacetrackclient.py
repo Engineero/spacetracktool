@@ -243,8 +243,8 @@ class SpaceTrackClient:
             mean_anomaly (float, str): The mean anomaly to search. May be a
                 single value or a range.
             ephemeris_type (int, str): TODO
-            element_set_no (int, str): The element set number to search. Should
-                be a single value.
+            element_set_no (int, str): The element set number to search. May be
+                a single value or a range.
             rev_at_epoch (float, str): The revolution at epoch to search. May
                 be a single value or a range.
             bstar (float, str): The b-star drag coefficient to search. May be a
@@ -259,8 +259,8 @@ class SpaceTrackClient:
                 first line of a two-line element set.
             tle_line2 (str): The third line of a three-line element set or
                 second line of a two-line element set.
-            object_id (str): TODO
-            object_number (int, str): TODO
+            object_id (int, str): maybe synonomous with norad_cat_id?
+            object_number (int, str): synonomous with norad_cat_id.
             semimajor_axis (float, str): The semimajor axis in Earth radii. May
                 be a single value or a range.
             period (float, str): The orbital period in days. May be single
@@ -365,7 +365,7 @@ class SpaceTrackClient:
             tle_line2 (str): The third line of a three-line element set or
                 second line of a two-line element set.
             object_id (str): TODO
-            object_number (int, str): TODO
+            object_number (int, str): synonomous with norad_cat_id.
             semimajor_axis (float, str): The semimajor axis in Earth radii. May
                 be a single value or a range.
             period (float, str): The orbital period in days. May be single
