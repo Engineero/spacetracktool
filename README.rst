@@ -1,24 +1,29 @@
 SpaceTrackTool
 ==============
 
-Master branch
-------------------
-
-|travis_m| |coveralls_m|
+============== =============================================
+Master branch  |travis_m| |coveralls_m| |version_m| |pypi_m|
+Develop branch |travis_d| |coveralls_d|
+============== =============================================
 
 .. |travis_m| image:: https://travis-ci.org/Engineero/spacetracktool.svg?branch=master
-   :target: https://travis-ci.org/Engineero/spacetracktool
+   :alt: Travis CI - Build Status
+   :target: https://travis-ci.org/Engineero/spacetracktool?branch=master
 .. |coveralls_m| image:: https://coveralls.io/repos/github/Engineero/spacetracktool/badge.svg?branch=master
+   :alt: Coveralls - Test Coverage
    :target: https://coveralls.io/github/Engineero/spacetracktool?branch=master
-
-Development branch
-------------------
-
-|travis_d| |coveralls_d|
+.. |version_m| image:: https://img.shields.io/pypi/pyversions/spacetracktool.svg?branch=master
+   :alt: PyPI - Python Version
+   :target: https://pypi.org/project/spacetracktool/
+.. |pypi_m| image:: https://img.shields.io/pypi/v/spacetracktool.svg?branch=master
+   :alt: PyPI
+   :target: https://pypi.org/project/spacetracktool/
 
 .. |travis_d| image:: https://travis-ci.org/Engineero/spacetracktool.svg?branch=develop
-   :target: https://travis-ci.org/Engineero/spacetracktool
+   :alt: Travis CI - Build Status
+   :target: https://travis-ci.org/Engineero/spacetracktool?branch=develop
 .. |coveralls_d| image:: https://coveralls.io/repos/github/Engineero/spacetracktool/badge.svg?branch=develop
+   :alt: Coveralls - Test Coverage
    :target: https://coveralls.io/github/Engineero/spacetracktool?branch=develop
 
 
