@@ -2,14 +2,23 @@
 
 import os
 from setuptools import setup, find_packages
+from distutils.util import convert_path
 
-#def read(fname):
-#    return open(os.path.join(os.path.dirname(__file__), fname)).read()
-with open ('README.rst', 'r') as readme_file:
+# Define paths and placeholders.
+ver_dict = {}
+VER_PATH = convert_path('spacetracktool/version.py')
+README_PATH = 'README.rst'
+
+# Read the README contents.
+with open (README_PATH, 'r') as readme_file:
     README = readme_file.read()
 
+# Read the version info.
+with open(VER_PATH, 'r') as ver_file:
+    exec(ver_file.read(), ver_dict)
+
 NAME = 'spacetracktool'
-VERSION = '0.1.0'
+VERSION = ver_dict['__version__']  # update in spacetracktool/version.py!
 DESCRIPTION = 'A Python API for querying space-track.org'
 LONG_DESCRIPTION_CONTENT_TYPE = 'text/x-rst'
 URL = 'https://github.com/Engineero/spacetracktool'
