@@ -6,7 +6,7 @@ from distutils.util import convert_path
 
 # Define paths and placeholders.
 ver_dict = {}
-VER_PATH = convert_path('spacetracktool/version.py')
+VER_PATH = convert_path('spacetracktool/_version.py')
 README_PATH = 'README.rst'
 
 # Read the README contents.
