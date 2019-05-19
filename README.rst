@@ -50,6 +50,14 @@ To create a slightly more complicated query, using ranges for some arguments:
     date_range = ops.make_range_string('2018-01-01', '2018-01-31')
     result = query.tle_query(epoch=date_range)  # generates and submits query
 
+You can also submit a query URL directly:
+
+.. code-block:: python
+
+    import spacetracktool as st
+    query = st.SpaceTrackClient('username', 'password')
+    url_result = query.submit('https://www.space-track.org/my/url/query/string')
+
 The official documents for the `space-track.org API can be found here`__.
 
 __ https://www.space-track.org/documentation
