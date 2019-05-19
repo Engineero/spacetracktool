@@ -14,3 +14,4 @@ request.
 
 """
 from .spacetrackclient import SpaceTrackClient
+from ._version import __version__

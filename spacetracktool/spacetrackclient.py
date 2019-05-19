@@ -41,7 +41,7 @@ class SpaceTrackClient:
         >> result = client.tle_query(epoch=date_range)  # throws out previous query!
 
     """
-    _base = 'https://space-track.org'  # base URL for requests
+    _base = 'https://www.space-track.org'  # base URL for requests
     _login_url = 'https://www.space-track.org/ajaxauth/login'  # login URL
     _logout_url = 'https://www.space-track.org/ajaxauth/logout'
     _null = 'null-val'  # string used by space-track for null values
@@ -62,8 +62,8 @@ class SpaceTrackClient:
                                  'csv', 'tle', '3le', 'kvn', or None.")
         else:
             self._fmt = 'json'
-        self.username = username
-        self.password = password
+        self._username = username
+        self._password = password
         self._query = []  # placeholder for our query string
         self.result = None  # placeholder for the query result
 
@@ -116,27 +116,37 @@ class SpaceTrackClient:
         POST request.
 
         """
-        query_string = '/'.join(self._query)
-        print('/'.join(self._query))
+        query_string = self._compile_query()
+        print(query_string)
         return query_string
 
-    def submit(self) -> requests.models.Response:
+    def submit(self, url: str = None) -> requests.models.Response:
         """ Submits the generated query to space-track.org.
+
+        Keyword Args:
+            url (str): Query URL for space-track.org or None. If not None, this
+                will override whatever query was built by the API. Default is
+                None.
 
         Returns:
             Response from space-track.org
 
         """
-        payload = {'identity': self.username,
-                   'password': self.password,
-                   'query': self._compile_query()}
+        if url:
+            payload = {'identity': self._username,
+                       'password': self._password,
+                       'query': url}
+        else:
+            payload = {'identity': self._username,
+                       'password': self._password,
+                       'query': self._compile_query()}
         self.result = requests.post(self.login_url, data=payload)
         if not self.result.ok:
             print('Error posting request! Status code {}'.format(
                 self.result.status_code))
             # pylint: disable=not-callable
             self.result.raise_for_status()  # raise HTTP error
-        self._logout()
+        # self._logout()
         return self.result
 
     def _value_query(self, key: str, value: str):
@@ -243,8 +253,8 @@ class SpaceTrackClient:
             mean_anomaly (float, str): The mean anomaly to search. May be a
                 single value or a range.
             ephemeris_type (int, str): TODO
-            element_set_no (int, str): The element set number to search. Should
-                be a single value.
+            element_set_no (int, str): The element set number to search. May be
+                a single value or a range.
             rev_at_epoch (float, str): The revolution at epoch to search. May
                 be a single value or a range.
             bstar (float, str): The b-star drag coefficient to search. May be a
@@ -259,8 +269,8 @@ class SpaceTrackClient:
                 first line of a two-line element set.
             tle_line2 (str): The third line of a three-line element set or
                 second line of a two-line element set.
-            object_id (str): TODO
-            object_number (int, str): TODO
+            object_id (int, str): maybe synonomous with norad_cat_id?
+            object_number (int, str): synonomous with norad_cat_id.
             semimajor_axis (float, str): The semimajor axis in Earth radii. May
                 be a single value or a range.
             period (float, str): The orbital period in days. May be single
@@ -269,6 +279,7 @@ class SpaceTrackClient:
                 be a single value or a range.
             perigee (float, str): The radius when furthest from the Earth. May
                 be a single value or a range.
+            limit (int): The maximum number of responses returned.
 
         Returns:
             The result of the query to space-track.org
@@ -288,7 +299,7 @@ class SpaceTrackClient:
                     'rev_at_epoch', 'bstar', 'mean_motion_dot',
                     'mean_motion_ddot', 'file', 'tle_line0', 'tle_line1',
                     'tle_line2', 'object_id', 'object_number',
-                    'semimajor_axis', 'period', 'apogee', 'perigee']
+                    'semimajor_axis', 'period', 'apogee', 'perigee', 'limit']
         self._start_query()
         self._query.extend(['class', 'tle'])
         self._make_query(key_list, kwargs)
@@ -365,7 +376,7 @@ class SpaceTrackClient:
             tle_line2 (str): The third line of a three-line element set or
                 second line of a two-line element set.
             object_id (str): TODO
-            object_number (int, str): TODO
+            object_number (int, str): synonomous with norad_cat_id.
             semimajor_axis (float, str): The semimajor axis in Earth radii. May
                 be a single value or a range.
             period (float, str): The orbital period in days. May be single
