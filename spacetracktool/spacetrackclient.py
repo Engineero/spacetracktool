@@ -136,7 +136,7 @@ class SpaceTrackClient:
                 self.result.status_code))
             # pylint: disable=not-callable
             self.result.raise_for_status()  # raise HTTP error
-        self._logout()
+        # self._logout()
         return self.result
 
     def _value_query(self, key: str, value: str):
