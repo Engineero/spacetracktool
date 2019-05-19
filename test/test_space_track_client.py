@@ -12,9 +12,9 @@ class TestSpaceTrackClient(unittest.TestCase):
         self.client = st.SpaceTrackClient(self.user, self.passwd)
 
     def test_init(self):
-        self.assertEqual(self.client.username, self.user,
+        self.assertEqual(self.client._username, self.user,
                          'username did not initialize correctly!')
-        self.assertEqual(self.client.password, self.passwd,
+        self.assertEqual(self.client._password, self.passwd,
                          'password did not initialize correctly!')
 
     def test_tle_query(self):
@@ -31,7 +31,7 @@ class TestSpaceTrackClient(unittest.TestCase):
         query = self.client.print_query()
         self.assertIsInstance(query, str, 'query not of the correct type!')
         self.assertEqual(query,
-                         'https://space-track.org/basicspacedata/query/class/tle/NORAD_CAT_ID/12345/format/json',
+                         'https://www.space-track.org/basicspacedata/query/class/tle/NORAD_CAT_ID/12345/format/json',
                          'tle_query did not update _query correctly!')
 
     def test_tle_latest_query(self):
