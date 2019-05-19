@@ -62,8 +62,8 @@ class SpaceTrackClient:
                                  'csv', 'tle', '3le', 'kvn', or None.")
         else:
             self._fmt = 'json'
-        self.username = username
-        self.password = password
+        self._username = username
+        self._password = password
         self._query = []  # placeholder for our query string
         self.result = None  # placeholder for the query result
 
@@ -120,16 +120,26 @@ class SpaceTrackClient:
         print('/'.join(self._query))
         return query_string
 
-    def submit(self) -> requests.models.Response:
+    def submit(self, url: str = None) -> requests.models.Response:
         """ Submits the generated query to space-track.org.
+
+        Keyword Args:
+            url (str): Query URL for space-track.org or None. If not None, this
+                will override whatever query was built by the API. Default is
+                None.
 
         Returns:
             Response from space-track.org
 
         """
-        payload = {'identity': self.username,
-                   'password': self.password,
-                   'query': self._compile_query()}
+        if url:
+            payload = {'identity': self._username,
+                       'password': self._password,
+                       'query': url}
+        else:
+            payload = {'identity': self._username,
+                       'password': self._password,
+                       'query': self._compile_query()}
         self.result = requests.post(self.login_url, data=payload)
         if not self.result.ok:
             print('Error posting request! Status code {}'.format(
@@ -269,6 +279,7 @@ class SpaceTrackClient:
                 be a single value or a range.
             perigee (float, str): The radius when furthest from the Earth. May
                 be a single value or a range.
+            limit (int): The maximum number of responses returned.
 
         Returns:
             The result of the query to space-track.org
@@ -288,7 +299,7 @@ class SpaceTrackClient:
                     'rev_at_epoch', 'bstar', 'mean_motion_dot',
                     'mean_motion_ddot', 'file', 'tle_line0', 'tle_line1',
                     'tle_line2', 'object_id', 'object_number',
-                    'semimajor_axis', 'period', 'apogee', 'perigee']
+                    'semimajor_axis', 'period', 'apogee', 'perigee', 'limit']
         self._start_query()
         self._query.extend(['class', 'tle'])
         self._make_query(key_list, kwargs)
