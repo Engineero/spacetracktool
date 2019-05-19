@@ -41,7 +41,7 @@ class SpaceTrackClient:
         >> result = client.tle_query(epoch=date_range)  # throws out previous query!
 
     """
-    _base = 'https://space-track.org'  # base URL for requests
+    _base = 'https://www.space-track.org'  # base URL for requests
     _login_url = 'https://www.space-track.org/ajaxauth/login'  # login URL
     _logout_url = 'https://www.space-track.org/ajaxauth/logout'
     _null = 'null-val'  # string used by space-track for null values
@@ -116,8 +116,8 @@ class SpaceTrackClient:
         POST request.
 
         """
-        query_string = '/'.join(self._query)
-        print('/'.join(self._query))
+        query_string = self._compile_query()
+        print(query_string)
         return query_string
 
     def submit(self, url: str = None) -> requests.models.Response:
